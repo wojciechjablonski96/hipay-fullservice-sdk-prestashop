@@ -35,7 +35,7 @@ require_once(dirname(__FILE__) . '/hipay_tpp.php');
 // init version prestashop = or != 1600
 $str_ps_version = (int) str_replace('.', '', _PS_VERSION_);
 
-define('HIPAY_LOG', 1);
+define('HIPAY_LOG', 0);
 define('HIPAY_STATUS_AUTHORIZED', 116);
 
 $hipay = new HiPay_Tpp();
