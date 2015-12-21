@@ -1872,8 +1872,6 @@ class HiPay_Tpp extends PaymentModule {
 					$totalEncaissement = $this->getOrderTotalAmountCaptured($orderLoaded->reference);
 
 					$stillToCapture = $orderTotal - $totalEncaissement;
-
-					$form .= $orderTotal .' - '. $totalEncaissement .' = ' .$stillToCapture . ($hide_capture ? 'TRUE':'FALSE');
 					
 					// Modif ajout texte warning si montant pas completement capture
 					if($stillToCapture)
