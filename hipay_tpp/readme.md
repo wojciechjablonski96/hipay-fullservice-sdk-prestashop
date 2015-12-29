@@ -67,6 +67,10 @@ OR
 + Force Callback in live
 + Optimization treatment when the callback change status
 + Optimization Order message with more informations
-+ Compatibility with multishop, the callback use the id_shop of cart
++ Compatibility with multishop, the callback use the id_shop of cart - Prestashop > v1.5
 + Update treatment on Prestashop 1.4 : Need to configure the server with a URL Cron.php to the crontab
++ Bugfix - Correction on the configuration page about the log table was not displayed correctly in English
++ Optimization Callback Captured (118) - if status captured exist in the order history, the status was not changed again
++ All status before Authorized (116) create an order with the proper status
+
 

@@ -37,6 +37,7 @@ class hipay_TppcaptureModuleFrontController extends ModuleFrontController {
 		$context = Context::getContext ();
 		$hipay = new HiPay_Tpp ();
 		$hipay_redirect_status = 'ok';
+		$errs = false;
 		
 		// If id_order is sent, we instanciate a new Order object
 		if (Tools::isSubmit ( 'id_order' ) && Tools::getValue ( 'id_order' ) > 0) {
@@ -140,9 +141,9 @@ class hipay_TppcaptureModuleFrontController extends ModuleFrontController {
 				// -----------------------
 				$stillToCapture = $orderTotal - $totalEncaissement;
 				
-                                $orderLoaded = new OrderCore ( Tools::getValue ( 'id_order' ) );
-                                $currentState = $orderLoaded->current_state;
-                                $stateLoaded = new OrderState ( $currentState );
+                $orderLoaded = new OrderCore ( Tools::getValue ( 'id_order' ) );
+                $currentState = $orderLoaded->current_state;
+                $stateLoaded = new OrderState ( $currentState );
                                 
 				if (round($stillToCapture,2) < round($refund_amount,2)) {					
 					$hipay_redirect_status = $hipay->l('Error, you are trying to capture more than the amount remaining', 'capture');
