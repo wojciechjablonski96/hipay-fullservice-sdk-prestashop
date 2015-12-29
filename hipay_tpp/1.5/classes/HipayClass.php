@@ -146,12 +146,6 @@ class HipayClass extends ObjectModel {
 			case 'es' :
 				$lang_code = 'es_ES';
 				break;
-			case 'en' :
-				$lang_code = 'en_IE';
-				break;
-			case 'en' :
-				$lang_code = 'en_US';
-				break;
 			case 'pt' :
 				$lang_code = 'pt_PT';
 				break;

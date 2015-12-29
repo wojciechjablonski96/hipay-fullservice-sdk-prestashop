@@ -35,8 +35,11 @@ require_once(dirname(__FILE__) . '/hipay_tpp.php');
 // init version prestashop = or != 1600
 $str_ps_version = (int) str_replace('.', '', _PS_VERSION_);
 
-define('HIPAY_LOG', 0);
+define('HIPAY_LOG', 1);
 define('HIPAY_STATUS_AUTHORIZED', 116);
+define('HIPAY_STATUS_CAPTURE_REQUESTED', 117);
+define('HIPAY_STATUS_CAPTURED', 118);
+define('HIPAY_STATUS_REFUNDED', 125);
 
 $hipay = new HiPay_Tpp();
 $callback_arr = array();
@@ -47,7 +50,7 @@ foreach ($arr as $key => $value) {
 	$callback_arr[$key] = $value;
 }
 
-//LOG 1
+//LOG 
 HipayLog('##########################################');
 HipayLog('##########################################');
 HipayLog('DEBUT TRAITEMENT DU CALLBACK');
@@ -58,17 +61,17 @@ if (!isset($callback_arr['state']) && !isset($callback_arr['status'])) {
 	HipayLogger::addLog($hipay->l('Bad Callback initiated', 'hipay'), HipayLogger::ERROR, 'Bad Callback initiated, but not processed further');
 	die();
 }
-//LOG 2
+//LOG 
 HipayLog('state exist');
 // set variables state and status, if value is empty => init error
 $log_state = ($callback_arr['state']) ? $callback_arr['state'] : 'error';
 $num_status = (int)$callback_arr['status'];
 $log_status = ($callback_arr['status']) ? $callback_arr['status'] : 'error';
 
-//LOG 3
-HipayLog('$log_state = '.$log_state);
-HipayLog('$num_status = '.$num_status);
-HipayLog('$log_status = '.$log_status);
+//LOG 
+HipayLog('---------- $log_state = '.$log_state);
+HipayLog('---------- $num_status = '.$num_status);
+HipayLog('---------- $log_status = '.$log_status);
 
 // if cart_id exist or not
 if (!isset($callback_arr['order']['id'])) {
@@ -76,8 +79,8 @@ if (!isset($callback_arr['order']['id'])) {
 	die('No cart found'); 
 }
 
-//LOG 4
-HipayLog('$callback id cart = '.$callback_arr['order']['id']);
+//LOG 
+HipayLog('---------- $callback id cart = '.$callback_arr['order']['id']);
 
 // init du panier en question
 $id_cart = (int)$callback_arr['order']['id'];
@@ -88,8 +91,8 @@ if (!Validate::isLoadedObject($cart)) {
 	die('Cart empty');
 }
 
-//LOG 5
-HipayLog('panier exist');
+//LOG 
+HipayLog('---------- panier exist');
 
 try{
 	// pose du lock SQL via SELECT FOR UPDATE sur la ligne panier
@@ -101,16 +104,16 @@ try{
 	$sql = 'begin;';
 	$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. $id_cart .' FOR UPDATE;';
 	
-	//LOG 6
-	HipayLog('SQL LOCK = '. $sql);
+	//LOG 
+	HipayLog('********** SQL LOCK = '. $sql);
 	
 	if (!Db::getInstance()->execute($sql)){
 		HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR, 'Bad LockSQL initiated, Lock could not be initiated for id_cart = ' . $id_cart);
 		die('Lock not initiated');
 	}
 	
-	//LOG 7
-	HipayLog('LOCK posé');
+	//LOG 
+	HipayLog('********** LOCK posé');
 
 	#################################################################
 	#################################################################
@@ -136,8 +139,8 @@ try{
 	$stt_error		= _PS_OS_ERROR_;
 	$stt_payment	= _PS_OS_PAYMENT_;
 
-	//LOG 8
-	HipayLog('config statut intialisé');
+	//LOG 
+	HipayLog('---------- config statut intialisé');
 
 	// order exist
 	// init order pour traitement
@@ -146,8 +149,8 @@ try{
 	$id_order 	 = false;
 	$objOrder	 = false;
 
-	//LOG 9
-	HipayLog('début ctrl order existe');
+	//LOG 
+	HipayLog('---------- début ctrl order existe');
 
 	if($cart->orderExists()){
 		// il existe une commande associée à ce panier
@@ -164,11 +167,11 @@ try{
 		}
 	}
 
-	//LOG 11
-	HipayLog('order_exist = '. $order_exist);
-	HipayLog('id_order = '. $id_order);
+	//LOG 
+	HipayLog('---------- order_exist = '. $order_exist);
+	HipayLog('---------- id_order = '. $id_order);
 	if($id_order){
-		HipayLog('objOrder initialisé');
+		HipayLog('---------- objOrder initialisé');
 	}
 
 	// exécution du traitement en rapport avec le N° de statut
@@ -230,7 +233,7 @@ try{
 			break;
 
 		// Status HIPAY_AUTHORIZED
-		case 116 : // Authorized
+		case HIPAY_STATUS_AUTHORIZED :
 			$orderState = $stt_authorized;
 			// si commande existante, on modifie le statut de la commande
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
@@ -239,8 +242,8 @@ try{
 			break;
 
 		// Status HIPAY_CAPTURE_REQUESTED
-		case 118 :
-		case 117 : // Capture Requested
+		case HIPAY_STATUS_CAPTURED :
+		case HIPAY_STATUS_CAPTURE_REQUESTED : // Capture Requested
 			$orderState = $stt_payment;
 			if ($callback_arr['captured_amount'] < $callback_arr['authorized_amount']) {
 				$orderState = $stt_partially;
@@ -283,8 +286,10 @@ try{
 			$orderState = $stt_refunded;
 			// si commande existante, on modifie le statut de la commande
 			if(changeStatusOrder($order_exist, $id_order, $orderState, $objOrder)){
-				refundOrder($callback_arr, $objOrder, $hipay, $orderState);
+				refundOrder($callback_arr, $objOrder, $hipay, $stt_refunded);
+				addMessageRefund($objOrder, $callback_arr, $hipay, $orderState);
 			}
+
 			break;
 
 		// Status HIPAY_CHARGED BACK
@@ -303,7 +308,7 @@ try{
 	}
 
 	//LOG 12
-	HipayLog('Fin de traitement');
+	HipayLog('---------- Fin de traitement');
 
 	// FIN du lock SQL - par un commit SQL
 	#################################################################
@@ -312,7 +317,7 @@ try{
 	$sql = 'commit;';
 
 	//LOG 13
-	HipayLog('Fin LOCK = ' .$sql);
+	HipayLog('********** Fin LOCK = ' .$sql);
 	HipayLog('FIN TRAITEMENT DU CALLBACK');
 	HipayLog('##########################################');
 	HipayLog('##########################################');
@@ -334,19 +339,19 @@ try{
 
 /*
  * Fonction ajouter un message privé dans la commande
- * @order - objet de la commande loadé
- * @callback_arr - tableau datas venant de TPP
- * @hipay - module hipay instancié
- * @statuts - tableau des statuts à traiter
+ * @order 			- objet de la commande loadé
+ * @callback_arr 	- tableau datas venant de TPP
+ * @hipay 			- module hipay instancié
+ * @statuts 		- tableau des statuts à traiter
  */
 function addMessageRefund($order, $callback_arr, $hipay, $statuts = NULL){
-	//LOG 1
-	HipayLog('Début addMessageRefund');
+	//LOG 
+	HipayLog('--------------- Début addMessageRefund');
 
 	if($statuts !== NULL){
 			
-		//LOG 2
-		HipayLog('addMessageRefund - init message');
+		//LOG 
+		HipayLog('--------------- addMessageRefund - init message');
 
 		// Paiement has already been done at least once, stop the process
 		$msg = new Message ();
@@ -365,8 +370,8 @@ function addMessageRefund($order, $callback_arr, $hipay, $statuts = NULL){
 			$msg->private = 1;
 			$msg->add();
 
-			//LOG 3
-			HipayLog('addMessageRefund - fin');
+			//LOG 
+			HipayLog('--------------- addMessageRefund - fin');
 
 			return true;
 		}
@@ -375,21 +380,21 @@ function addMessageRefund($order, $callback_arr, $hipay, $statuts = NULL){
 }
 /*
  * Fonction générique pour créer la commande avec le paiement HiPay
- * @order_exist - Boolean ture or false
- * @callback_arr - array data venant de TPP
- * @hipay - objet Hipay du module pour utiliser la traduction et le nom du module
- * @cart - objet panier pour l'id demandé
- * @statut - id du statut au moment de la création de la commande
+ * @order_exist 	- Boolean ture or false
+ * @callback_arr 	- array data venant de TPP
+ * @hipay 			- objet Hipay du module pour utiliser la traduction et le nom du module
+ * @cart 			- objet panier pour l'id demandé
+ * @statut 			- id du statut au moment de la création de la commande
  */
 function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut){
 	
-	//LOG 1
-	HipayLog('Début createOrderByHipay');
+	//LOG 
+	HipayLog('--------------- Début createOrderByHipay');
 
 	if(!$order_exist){
 
-		//LOG 2
-		HipayLog('pas de commande existante');
+		//LOG
+		HipayLog('--------------- pas de commande existante');
 
 		// init message pour création de commande
 		$message  = $hipay->l('HiPay - Callback initiated') . "<br>";
@@ -401,7 +406,7 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut){
 		$message = strip_tags($message, '<br>');
 
 		//LOG 2
-		HipayLog('MESSAGE = '.$message);
+		HipayLog('--------------- MESSAGE = '.$message);
 
 		// init order_payement
 		$orderPayment = array(
@@ -453,9 +458,12 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut){
                     	'" . $callback_arr['ip_address'] . "',
                     	'" . $callback_arr['ip_country'] . "',
                     	'" . $callback_arr['payment_method']['token'] . "');";
-        HipayLog('TABLE HIPAY = '. $sql);
+
+		// LOG
+        HipayLog('--------------- TABLE HIPAY = '. $sql);
+
         if(!Db::getInstance()->execute($sql)){
-        	//LOG 1b
+        	//LOG 
 			HipayLog('Insert table HiPay en erreur');
 			return false;
         }
@@ -475,49 +483,54 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut){
                 	'" . $callback_arr['payment_method']['card_expiry_year'] . "', 
                 	'" . $callback_arr['payment_method']['issuer'] . "', 
                 	'" . $callback_arr['payment_method']['country'] . "');";
-			HipayLog('TABLE HIPAY = '. $sql_insert);
+
+			// LOG
+			HipayLog('--------------- TABLE HIPAY = '. $sql_insert);
+
 			Db::getInstance()->execute($sql_insert);
 		}
 
-		//LOG 3
-		HipayLog('currentOrder = '.$hipay->currentOrder);
+		//LOG
+		HipayLog('--------------- currentOrder = '.$hipay->currentOrder);
 		return true;
 	}
 	return false;
 }
 /*
  * Fonction générique pour modifier le status
- * @param1 $orderState -> id du statut de commande souhaitée
- * @param2 $id_order   -> id de la commande à traiter
+ * @param1 $orderState 		-> id du statut de commande souhaitée
+ * @param2 $id_order   		-> id de la commande à traiter
+ * @param3 $orderState   	-> status
+ * @param4 $callback_arr   	->  Tableau des données envoyé en POST de TPP
  */
 function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callback_arr = ''){
 	$bool = false;
-	//LOG 1
-	HipayLog('Début changeStatusOrder');
+	//LOG 
+	HipayLog('--------------- Début changeStatusOrder');
 
 	if($order_exist && $id_order){
-		//LOG 1-a
-		HipayLog('oderexist && id_order');
-		if ((int)$order->getCurrentState() != (int)$orderState){
-			//LOG 1-b
-			HipayLog('statut différent');
+		//LOG 
+		HipayLog('--------------- oderexist && id_order');
+		if ((int)$order->getCurrentState() != (int)$orderState && !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState)){
+			//LOG 
+			HipayLog('--------------- statut différent');
 			$order_history = new OrderHistory();
-			//LOG 1-c
-			HipayLog('order_history init');
+			//LOG 
+			HipayLog('--------------- order_history init');
 			$order_history->id_order = $id_order;
-			//LOG 1-d
-			HipayLog('order_id init');
-			$order_history->changeIdOrderState($orderState, $id_order);
-			//LOG 1-e
-			HipayLog('changeIdOrderState('.$orderState.','.$id_order.')');
+			//LOG 
+			HipayLog('--------------- order_id init');
+			$order_history->changeIdOrderState($orderState, $id_order,true);
+			//LOG 
+			HipayLog('--------------- changeIdOrderState('.$orderState.','.$id_order.')');
 			$order_history->addWithemail();
 
-			//LOG 2
-			HipayLog('statut changé = '.$orderState);
+			//LOG 
+			HipayLog('--------------- statut changé = '.$orderState);
 
 			$bool = true;
 		}
-		if(!empty($callback_arr) && isset($callback_arr['status']) && $callback_arr['status'] == 118){
+		if(!empty($callback_arr) && isset($callback_arr['status']) && $callback_arr['status'] == HIPAY_STATUS_CAPTURED){
 			$hipay = new HiPay_Tpp();
 			// historise le callback sous forme de message
 			$message  = $hipay->l('HiPay - Callback initiated') . "<br>";
@@ -537,13 +550,29 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 		}
 		// Init / MAJ de la ligne message HIPAY_CAPTURE
 		addHipayCaptureMessage($callback_arr,$order->id);
-		//LOG 3
-		HipayLog('statut est le même');
+
+		//LOG
+		HipayLog('--------------- statut est le même');
+
+		// Controle if it's again a partially captured and inferior to the total order
+
+		//LOG 
+		HipayLog('--------------- Controle si status 117 et amount > amount captured');
+
+		if(!empty($callback_arr) 
+			&& isset($callback_arr['status']) 
+				&& $callback_arr['status'] == HIPAY_STATUS_CAPTURE_REQUESTED
+			 		&& $callback_arr['captured_amount'] < $callback_arr['authorized_amount']){
+			//LOG 
+			HipayLog('--------------- captured_amount ('.$callback_arr['captured_amount'].') est < à authorized_amount ('.$callback_arr['authorized_amount'].')');
+			$bool = true;
+		}
+
 		return $bool;
 	}
-	//LOG 4
-	HipayLog('pas de changement de statut car pas de commande');
-	return false;
+	//LOG 
+	HipayLog('--------------- pas de changement de statut car pas de commande');
+	return $bool;
 }
 /*
  * Fonction pour tracer la transaction dans la commande
@@ -552,8 +581,8 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
  */
 function captureOrder($callback_arr = null, $order = null) {
 
-	//LOG 1
-	HipayLog('Début captureOrder');
+	//LOG 
+	HipayLog('--------------- Début captureOrder');
 	$hipay = new HiPay_Tpp();
 	// Local Cards update
 	$local_card_name = ''; // Initialize to empty string
@@ -586,32 +615,50 @@ function captureOrder($callback_arr = null, $order = null) {
 		$sql = "
 				UPDATE `" . _DB_PREFIX_ . "order_payment`
                     SET `card_number` = '" . $callback_arr['payment_method']['pan'] . "',
-                    `payment_method` = '" . 'HiPay Fullservice' . $local_card_name . "',
-                    `amount` = '" . $callback_arr['captured_amount'] . "',
-                    `transaction_id` = '" . $callback_arr['transaction_reference'] . "',
-                    `card_brand` = '" . $callback_arr['payment_method']['brand'] . "',
-                    `card_expiration` = '" . $callback_arr['payment_method']['card_expiry_month'] . "/" . $callback_arr['payment_method']['card_expiry_year'] . "',
-                    `card_holder` = '" . $callback_arr['payment_method']['card_holder'] . "'
-                    WHERE `order_reference`='" . $order->reference . "';";
+	                    `amount` = '" . $callback_arr['captured_amount'] . "',
+	                    `transaction_id` = '" . $callback_arr['transaction_reference'] . "',
+	                    `card_brand` = '" . $callback_arr['payment_method']['brand'] . "',
+	                    `card_expiration` = '" . $callback_arr['payment_method']['card_expiry_month'] . "/" . $callback_arr['payment_method']['card_expiry_year'] . "',
+	                    `card_holder` = '" . $callback_arr['payment_method']['card_holder'] . "'
+                    WHERE 
+                    	`payment_method` = '" . 'HiPay Fullservice' . $local_card_name . "'
+                    AND `order_reference`= '" . $order->reference . "';";
         
         if(!Db::getInstance()->execute($sql)){
-        	//LOG 1b
-			HipayLog('Update en erreur');
+        	//LOG 
+			HipayLog('--------------- Update en erreur');
 			return false;
         }
 	
 		// Check if there is a duplicated OrderPayment and remove duplicate from same order ref but with incomplete payment method name
 		$sql_duplicate_order_payment = "
 			DELETE FROM `" . _DB_PREFIX_ . "order_payment` 
-			WHERE id_order_payment NOT IN ( 
-				SELECT id_order_payment FROM `ps_order_invoice_payment` 
-				WHERE id_order = ".$order->id.") 
-			AND order_reference='" . $order->reference . "';";
+			WHERE 
+				payment_method='HiPay Fullservice' 
+				AND transaction_id='' 
+				AND order_reference='" . $order->reference . "'
+			;";
 
 		Db::getInstance()->execute($sql_duplicate_order_payment);
 
-		//LOG 3
-		HipayLog('delete transaction pas invoice = '. $sql_duplicate_order_payment);
+		// set invoice order
+		if ($callback_arr['status'] == HIPAY_STATUS_CAPTURE_REQUESTED || $callback_arr['status'] == HIPAY_STATUS_CAPTURED) {
+			$sql = 'SELECT `id_order_payment`
+				FROM `'._DB_PREFIX_.'order_payment`
+				WHERE order_reference="' . $order->reference . ' LIMIT 1";';
+	        $result = Db::getInstance()->getRow($sql);
+	        $id_orderP = isset($result['id_order_payment']) ? $result['id_order_payment'] : false;
+			if($id_orderP){
+				$sql_update = "
+					UPDATE `" . _DB_PREFIX_ . "order_invoice_payment`
+                    SET `id_order_payment` = " . $id_orderP . "
+                    WHERE `id_order` = " . $order->id;
+				Db::getInstance()->execute($sql_update);
+			}
+		}
+
+		//LOG 
+		HipayLog('--------------- delete transaction pas invoice = '. $sql_duplicate_order_payment);
 
 		// init message pour création de commande
 		$message = $hipay->l('Transaction Reference:') . ' ' . $callback_arr['transaction_reference'] . '<br />
@@ -627,9 +674,9 @@ function captureOrder($callback_arr = null, $order = null) {
             ' . $hipay->l('Currency:') . ' ' . $callback_arr['currency'] . '<br />
             ' . $hipay->l('Customer IP address:') . ' ' . $callback_arr['ip_address'];
         
-        //LOG 3
-		HipayLog('MESSAGE = '. $message);
-
+        //LOG 
+		HipayLog('--------------- MESSAGE = '. $message);
+		$message = strip_tags($message, '<br>');
 		if (Validate::isCleanHtml($message)) {
 			$msg = new Message ();
 			$msg->message = $message;
@@ -637,15 +684,15 @@ function captureOrder($callback_arr = null, $order = null) {
 			$msg->private = 1;
 			$msg->add();
 
-			//LOG 3
-			HipayLog('addMessage on captureOrder - ' . $message);
+			//LOG 
+			HipayLog('--------------- addMessage on captureOrder - ' . $message);
 		}
     }
     if($callback_arr)
-	//LOG 3
-	HipayLog('Fin captureOrder');
-	HipayLog('############################################################');
-	HipayLog('############################################################');
+	//LOG 
+	HipayLog('--------------- Fin captureOrder');
+	HipayLog('--------------- --------------- --------------- --------------- ');
+	HipayLog('--------------- --------------- --------------- --------------- ');
 
 	return true;
 }
@@ -654,32 +701,30 @@ function captureOrder($callback_arr = null, $order = null) {
  * @param1 $callback_arr -> données remontées par TPP
  * @param2 $order        -> la commande instanciée
  * @param3 $hipay 		 -> Module hipay instancié
+ * @param4 $statut 		 -> Statut de la commande
  */
 function refundOrder($callback_arr, $order, $hipay, $statut) {
 	
-	//LOG 1
-	HipayLog('Début refundOrder'); 
-
-	// Force le statut refunded 
-	$sql_status = "
-			UPDATE `" . _DB_PREFIX_ . "orders`
-			SET current_state =  " . $statut . "
-			WHERE id_order = ".$order->id.";";
-
-	if(!Db::getInstance()->execute($sql_status)){
-		//LOG 2
-		HipayLog('Update statut = '.$statut.' en erreur pour la commande = '.$order->id);
-		return false;
-	}
-
-
+	//LOG 
+	HipayLog('--------------- Début refundOrder'); 
 
 	// Modif to update payment if refund has already been made once.
 	$payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE payment_method='HiPay - refund' AND order_reference='" . $order->reference . "'";
+	
+	HipayLog('--------------- SQL Si déjà un refund = '. $payment_message_sql);
+
 	$paymentmessage = Db::getInstance()->executeS($payment_message_sql);
 	if (!empty($paymentmessage)) {
+
+		// LOG
+		HipayLog('--------------- Refund existant donc procédure update');
+
 		// Set refund to negative
 		$amount = - 1 * $callback_arr['refunded_amount'];
+
+		// LOG
+		HipayLog('--------------- Montant à refund = '.$amount);
+
 		// Update existing payment method
 		$sql = "UPDATE `" . _DB_PREFIX_ . "order_payment`
 				SET `amount` = '" . $amount . "'
@@ -699,77 +744,101 @@ function refundOrder($callback_arr, $order, $hipay, $statut) {
 		} else {
 			$order_id = $order->id;
 			$tag = 'HIPAY_CAPTURE ';
-			$amount = $callback_arr['captured_amount'] - $callback_arr['refunded_amount'];
-			$msgs = Message::getMessagesByOrderId($order_id, true); //true for private messages (got example from AdminOrdersController)
+			// amount est déjà négatif
+			$amount_rest = $callback_arr['captured_amount'] + ($amount);
+			$msgs = Message::getMessagesByOrderId($order_id, true); 
+			//true for private messages (got example from AdminOrdersController)
 
 			if (count($msgs)) {
 				foreach ($msgs as $msg) {
 					$line = $msg['message'];
 					if (startsWith($line, $tag)) {
 						$to_update_msg = new Message($msg['id_message']);
-						$to_update_msg->message = $tag . $amount;
+						$to_update_msg->message = $tag . $amount_rest;
 						$to_update_msg->save();
 						break;
 					}
 				}
 			}
 		}
-		// Stop the process to prevent double treatment
-		return true;
-	}
-
-	$amount = - 1 * $callback_arr['refunded_amount']; // Set refund to negative
-	$payment_method = 'HiPay - refund';
-	$payment_transaction_id = '';
-	$currency = new Currency($order->id_currency);
-	$payment_date = date("Y-m-d H:i:s");
-	$order_has_invoice = $order->hasInvoice();
-	if ($order_has_invoice)
-		$order_invoice = new OrderInvoice(Tools::getValue('payment_invoice'));
-	else
-		$order_invoice = null;
-
-	if (!$order->addOrderPayment($amount, $payment_method, $payment_transaction_id, $currency, $payment_date, $order_invoice)) {
-		// Ajout commentaire status KO
-		$msg = new Message ();
-		$message = $hipay->l('HiPay - Refund failed.');
-		$message .= ' - ' . $hipay->l('Amount refunded failed =') . ' ' . $amount;
-		$message = strip_tags($message, '<br>');
-		if (Validate::isCleanHtml($message)) {
-			$msg->message = $message;
-			$msg->id_order = (int)$order->id;
-			$msg->private = 1;
-			$msg->add();
-		}
 	} else {
-		$order_id = $order->id;
-		$tag = 'HIPAY_CAPTURE ';
-		$amount = $callback_arr['captured_amount'] - $callback_arr['refunded_amount'];
-		$msgs = Message::getMessagesByOrderId($order_id, true); //true for private messages (got example from AdminOrdersController)
 
-		if (count($msgs)) {
-			foreach ($msgs as $msg) {
-				$line = $msg['message'];
-				if (startsWith($line, $tag)) {
-					$to_update_msg = new Message($msg['id_message']);
-					$to_update_msg->message = $tag . $amount;
-					$to_update_msg->save();
-					break;
+		// LOG
+		HipayLog('--------------- Nouveau Refund donc procédure insert');
+
+		$amount = - 1 * $callback_arr['refunded_amount']; // Set refund to negative
+		$payment_method = 'HiPay - refund';
+		$payment_transaction_id = $callback_arr['transaction_reference'];
+		$currency = new Currency($order->id_currency);
+		$payment_date = date("Y-m-d H:i:s");
+		$order_has_invoice = $order->hasInvoice();
+		if ($order_has_invoice)
+			$order_invoice = new OrderInvoice(Tools::getValue('payment_invoice'));
+		else
+			$order_invoice = null;
+
+		if (!$order->addOrderPayment($amount, $payment_method, $payment_transaction_id, $currency, $payment_date, $order_invoice)) {
+			// Ajout commentaire status KO
+			$msg = new Message ();
+			$message = $hipay->l('HiPay - Refund failed.');
+			$message .= ' - ' . $hipay->l('Amount refunded failed =') . ' ' . $amount;
+			$message = strip_tags($message, '<br>');
+			if (Validate::isCleanHtml($message)) {
+				$msg->message = $message;
+				$msg->id_order = (int)$order->id;
+				$msg->private = 1;
+				$msg->add();
+			}
+		} else {
+			$order_id = $order->id;
+			$tag = 'HIPAY_CAPTURE ';
+			// amount est déjà en négatif
+			$amount_rest = $callback_arr['captured_amount'] + ($amount);
+			$msgs = Message::getMessagesByOrderId($order_id, true); 
+			//true for private messages (got example from AdminOrdersController)
+
+			if (count($msgs)) {
+				foreach ($msgs as $msg) {
+					$line = $msg['message'];
+					if (startsWith($line, $tag)) {
+						$to_update_msg = new Message($msg['id_message']);
+						$to_update_msg->message = $tag . $amount_rest;
+						$to_update_msg->save();
+						break;
+					}
 				}
 			}
 		}
 	}
 
-	//LOG 2
-	HipayLog('fin refundOrder'); 
+	// Force le statut refunded 
+	$sql_status = "UPDATE `" . _DB_PREFIX_ . "orders`
+			SET current_state =  " . $statut . "
+			WHERE id_order = ".$order->id.";";
+
+	//LOG
+	HipayLog('--------------- SQL Update Order = ' . $sql_status); 
+
+	if(!Db::getInstance()->execute($sql_status)){
+		//LOG 
+		HipayLog('--------------- Update statut = '.$statut.' en erreur pour la commande = '.$order->id);
+		return false;
+	} 
+	//LOG
+	HipayLog('--------------- SQL Update Order OK'); 	
+	HipayLog('--------------- fin refundOrder'); 
 
 	return true;
 }
-
+/*
+ * fonction permettant d'enregistrer le montant de la capture
+ * @param1 $callback_arr -> données remontées par TPP
+ * @param2 $id_order     -> ID de la commande
+ */
 function addHipayCaptureMessage($callback_arr,$id_order){
 	// Init / MAJ de la ligne message HIPAY_CAPTURE
 	$tag = 'HIPAY_CAPTURE ';
-	$amount = ($callback_arr['status'] == 116 ? '0.00' : $callback_arr['captured_amount']);
+	$amount = ($callback_arr['status'] == HIPAY_STATUS_AUTHORIZED ? '0.00' : (!empty($callback_arr['captured_amount']) ? $callback_arr['captured_amount']:'0.00'));
 	$msgs = Message::getMessagesByOrderId((int)$id_order, true);
 	$create_new_msg = true;
 	if (count($msgs)) {
@@ -796,6 +865,40 @@ function addHipayCaptureMessage($callback_arr,$id_order){
 			$msg->add();
 		}
 	}
+}
+/*
+ * fonction permettant de contrôler si il y a déjà eu un statut paiement accepté
+ * @param1 $id_order 	-> ID de la commande
+ * @param2 $stt_payment -> ID du statut paiement accepté
+ */
+function controleIfStatushistoryExist($id_order, $stt_payment, $orderState){
+	//LOG
+	HipayLog('--------------- Début contrôle si déjà eu paiement accepté');
+
+	$bool = false;
+
+	if($orderState == $stt_payment) {
+
+		$sql = 'SELECT COUNT(id_order_history) as count
+				FROM `'._DB_PREFIX_.'order_history`
+				WHERE `id_order` = '.$id_order.' AND id_order_state = '.$stt_payment;
+
+		//LOG
+		HipayLog('--------------- SQL de contrôle = ' . $sql);
+
+	    $result = Db::getInstance()->getRow($sql);
+	    if( isset($result['count']) && $result['count'] > 0 ){
+	    	$bool = true;
+	    }
+
+	} 
+
+    //LOG
+    HipayLog('--------------- Statut traité => ' . $orderState);
+    HipayLog('--------------- Résultat - Existe déjà ? => ' . ($bool ? 'TRUE':'FALSE'));
+	HipayLog('--------------- Fin contrôle si déjà eu paiement accepté');
+
+    return $bool;
 }
 
 
