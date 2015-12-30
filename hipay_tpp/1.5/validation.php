@@ -135,6 +135,7 @@ try{
 	$stt_refunded	= Configuration::get('HIPAY_REFUNDED');
 	$stt_chargedback= Configuration::get('HIPAY_CHARGEDBACK');
 	$stt_c_refused 	= Configuration::get('HIPAY_CAPTURE_REFUSED');
+	$stt_denied		= Configuration::get('HIPAY_DENIED');
 	$stt_cancel		= _PS_OS_CANCELED_;
 	$stt_error		= _PS_OS_ERROR_;
 	$stt_payment	= _PS_OS_PAYMENT_;
@@ -198,19 +199,25 @@ try{
 		case 129 : // Charged Back
 			$orderState = $stt_error;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 
 		// Status HIPAY_DENIED
 		case 111 : // Denied
 		case 113 : // Refused
-			$orderState = $stt_error;
+			$orderState = $stt_denied;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 
 		// Status HIPAY_CHALLENGED
 		case 112 : // Authorized and Pending
 			$orderState = $stt_challenged;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 		// Status HIPAY_PENDING
 		case 140 : // Authentication Requested
@@ -218,18 +225,24 @@ try{
 		case 200 : // Pending Payment
 			$orderState = $stt_pending;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 
 		// Status HIPAY_EXPIRED
 		case 114 : // Expired
 			$orderState = $stt_expired;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 
 		// Status _PS_OS_CANCELED_
 		case 115 : // Cancelled
 			$orderState = $stt_cancel;
 			changeStatusOrder($order_exist, $id_order, $orderState, $objOrder);
+			// si pas de commande existante, on créé la commande
+			createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $orderState);
 			break;
 
 		// Status HIPAY_AUTHORIZED
