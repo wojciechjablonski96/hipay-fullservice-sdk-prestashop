@@ -25,6 +25,9 @@
 
 {if $status == 'ok'}
 	<p>{l s='Your order on %s is complete.' sprintf=$shop_name mod='hipay_tpp'}</p>
+	<pre>
+		{$printHipay}
+	</pre>
 {else}
 	<p class="warning">
 		{l s='We noticed a problem with your order. If you think this is an error, feel free to contact our'  mod='hipay_tpp'} 

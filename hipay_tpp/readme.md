@@ -1,4 +1,4 @@
-/**
+/*
 * Copyright © 2015 HIPAY
 *
 * NOTICE OF LICENSE
@@ -27,7 +27,8 @@
 About
 =====
 + Payment via HiPay TPP for PrestaShop.
-+ Version 1.1.26
++ Version 1.1.27
++ Contact HiPay fullservice @ https://www.hipay.com/nos-bureaux/
 
 System Requirements
 ===================
@@ -59,10 +60,27 @@ OR
        */5 * * * * wget http(s)://your-domain.com/modules/hipay_tpp/cron.php?token=XXXX-token-display-in-module-settings-XXXX 
     4. Save 
 
+How to setup TAG Analytics
+==========================
+New variables:
+
+{$id_order}     - ID order
+{$total}        - Total order paid     
+{$transaction}  - Transaction ID sending by HiPay
+{$currency}     - Currency used by this Order
+{$email}        - Email customer
+
+Add your tag analytics in the template (/modules/hipay_tpp/views/templates/front/payment_accept.tpl)
+Replace informations by the variables.
+
 ### Tested with:
 + PrestaShop 1.6.x
 
 ### Versionning:
+#### v1.1.27:
++ Optimization in hipay_tpp/controllers/front/accept.php with more informations (id_order, total order, transaction, email, currency)
++ Add new variables in the template hipay_tpp/views/templates/front/payment_accept.tpl
+
 #### v1.1.26:
 + Force Callback in live
 + Optimization treatment when the callback change status
