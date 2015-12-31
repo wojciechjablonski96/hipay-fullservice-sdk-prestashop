@@ -116,7 +116,7 @@
                 						<br />
 							            <span class="cart_navigation">
 							                <a class="exclusive" title="{l s='Pay' mod='hipay_tpp'}" href="javascript:void(0);" onclick="{literal}$(this).closest('form').submit();{/literal}">
-																											{l s='Pay' mod='hipay_tpp'} »
+											{l s='Pay' mod='hipay_tpp'} »
 							                </a>
 							            </span>
         							</form>

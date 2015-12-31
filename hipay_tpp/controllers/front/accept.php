@@ -34,8 +34,50 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-                // Disconnect User from cart
-                HipayClass::unsetCart();
+    	
+    	// récupération des informations en GET ou POST venant de la page de paiement
+    	$cart_id 		= Tools::getValue('orderId');
+    	$transac 		= Tools::getValue('reference'); 
+    	$context 	= Context::getContext();
+    	// --------------------------------------------------------------------------
+    	// vérification si les informations ne sont pas = à FALSE
+    	if(!$cart_id){
+    		// récupération du dernier panier via son compte client
+    		$sql = 'SELECT `id_cart`
+					FROM `'._DB_PREFIX_.'cart`
+					WHERE `id_customer` = '.$context->customer->id .'
+					ORDER BY date_upd DESC';
+	        $result = Db::getInstance()->getRow($sql);
+	        $cart_id = isset($result['id_cart']) ? $result['id_cart'] : false;
+			if($cart_id){
+				$objCart = new Cart((int)$cart_id);
+			}
+    	}else{
+    		// load cart
+    		$objCart = new Cart((int)$cart_id);
+    	}
+    	// load order for id_order 
+    	$order_id = Order::getOrderByCartId($cart_id);
+    	// load transaction by id_order
+    	$sql = 'SELECT DISTINCT(op.transaction_id)
+				FROM `'._DB_PREFIX_.'order_payment` op
+				INNER JOIN `'._DB_PREFIX_.'orders` o ON o.reference = op.order_reference
+				WHERE o.id_order = '.$order_id;
+        $result = Db::getInstance()->getRow($sql);
+        $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : 0;
+
+
+    	$context->smarty->assign(array(
+			'id_order' 		=> $order_id,
+			'total' 		=> $objCart->getOrderTotal(true),
+			'transaction' 	=> $transaction,
+			'currency' 		=> $context->currency,
+			'email'			=> $context->customer->email
+		));
+
+
+        // Disconnect User from cart
+        //HipayClass::unsetCart();
             
 		$this->setTemplate ( 'payment_accept.tpl' );
 	}

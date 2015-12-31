@@ -34,8 +34,10 @@ class HiPay_TppPendingModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-            // Disconnect User from cart
-            HipayClass::unsetCart();
+        // Disconnect User from cart
+        HipayClass::unsetCart();
+
+        
             
 		$this->setTemplate ( 'payment_pending.tpl' );
 	}
