@@ -23,7 +23,6 @@
 *  
 *  International Registered Trademark & Property of Profileo
 */
-
 /**
  *
  * @since 1.5.0
@@ -58,26 +57,25 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
     	}
     	// load order for id_order 
     	$order_id = Order::getOrderByCartId($cart_id);
-    	// load transaction by id_order
-    	$sql = 'SELECT DISTINCT(op.transaction_id)
-				FROM `'._DB_PREFIX_.'order_payment` op
-				INNER JOIN `'._DB_PREFIX_.'orders` o ON o.reference = op.order_reference
-				WHERE o.id_order = '.$order_id;
-        $result = Db::getInstance()->getRow($sql);
+    	if($order_id && !empty($order_id) && $order_id > 0 ){
+	    	// load transaction by id_order
+	    	$sql = 'SELECT DISTINCT(op.transaction_id)
+					FROM `'._DB_PREFIX_.'order_payment` op
+					INNER JOIN `'._DB_PREFIX_.'orders` o ON o.reference = op.order_reference
+					WHERE o.id_order = '.$order_id;
+	        $result = Db::getInstance()->getRow($sql);
+	    }
         $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : 0;
-
-
     	$context->smarty->assign(array(
 			'id_order' 		=> $order_id,
 			'total' 		=> $objCart->getOrderTotal(true),
 			'transaction' 	=> $transaction,
-			'currency' 		=> $context->currency,
+			'currency' 		=> $context->currency->iso_code,
 			'email'			=> $context->customer->email
 		));
-
-
+    	sleep(2);
         // Disconnect User from cart
-        //HipayClass::unsetCart();
+        HipayClass::unsetCart();
             
 		$this->setTemplate ( 'payment_accept.tpl' );
 	}
