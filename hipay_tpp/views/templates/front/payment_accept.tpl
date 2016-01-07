@@ -46,16 +46,7 @@
 *	</script>
 *}
 
-{literal}
-	<script>
-		window.onload = function() {
-			if (!window.location.hash) {
-				window.location = window.location + '#loaded';
-				window.location.reload();
-			}
-		}
-	</script>
-{/literal}
+
 {capture name=path}{l s='HiPay payment.' mod='hipay_tpp'}{/capture}
 <h2>{l s='Payment Summary' mod='hipay_tpp'}</h2>
 <p>{l s='Your order has been taken into account.' mod='hipay_tpp'}
