@@ -63,6 +63,16 @@
 </p>
 <p><a href="index.php">{l s='Back to home' mod='hipay_tpp'}</a></p>
 
+<div>
+<ul>
+   <li> {$id_order} - ID order </li>
+   <li> {$total} - Total order paid  </li>
+   <li> {$transaction} - Transaction ID sending by HiPay </li>
+   <li> {$currency} - Currency used by this Order </li>
+   <li> {$email} - Email customer </li>
+</ul>
+</div>
+
 {*
  *
  * HERE CODE FOR TAG ANALYTICS
