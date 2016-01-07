@@ -23,7 +23,6 @@
 *  
 *  International Registered Trademark & Property of Profileo
 */
-
 /**
  *
  * @since 1.5.0
@@ -34,7 +33,7 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-    	
+    	sleep(3);	
     	// récupération des informations en GET ou POST venant de la page de paiement
     	$cart_id 		= Tools::getValue('orderId');
     	$transac 		= Tools::getValue('reference'); 
@@ -67,8 +66,6 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 	        $result = Db::getInstance()->getRow($sql);
 	    }
         $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : 0;
-
-
     	$context->smarty->assign(array(
 			'id_order' 		=> $order_id,
 			'total' 		=> $objCart->getOrderTotal(true),
@@ -77,7 +74,6 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 			'email'			=> $context->customer->email
 		));
 
-    	sleep(2);
         // Disconnect User from cart
         HipayClass::unsetCart();
             

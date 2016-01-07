@@ -46,32 +46,13 @@
 *	</script>
 *}
 
-{literal}
-	<script>
-		window.onload = function() {
-			if (!window.location.hash) {
-				window.location = window.location + '#loaded';
-				window.location.reload();
-			}
-		}
-	</script>
-{/literal}
+
 {capture name=path}{l s='HiPay payment.' mod='hipay_tpp'}{/capture}
 <h2>{l s='Payment Summary' mod='hipay_tpp'}</h2>
 <p>{l s='Your order has been taken into account.' mod='hipay_tpp'}
     <br /><br />{l s='It will be available in a few moments in your' mod='hipay_tpp'} <strong><a href="{$link->getPageLink('history', true)}">{l s='order history' mod='hipay_tpp'}</a></strong>
 </p>
 <p><a href="index.php">{l s='Back to home' mod='hipay_tpp'}</a></p>
-
-<div>
-<ul>
-   <li> {$id_order} - ID order </li>
-   <li> {$total} - Total order paid  </li>
-   <li> {$transaction} - Transaction ID sending by HiPay </li>
-   <li> {$currency} - Currency used by this Order </li>
-   <li> {$email} - Email customer </li>
-</ul>
-</div>
 
 {*
  *
