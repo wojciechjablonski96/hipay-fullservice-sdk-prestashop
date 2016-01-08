@@ -35,8 +35,8 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 	public function postProcess() {
 		// Disconnect User from cart
         HipayClass::unsetCart();
-        // block 5s because
-    	sleep(5);	
+        // block 3s because
+    	sleep(3);	
     	// récupération des informations en GET ou POST venant de la page de paiement
     	$cart_id 		= Tools::getValue('orderId');
     	$transac 		= Tools::getValue('reference'); 
