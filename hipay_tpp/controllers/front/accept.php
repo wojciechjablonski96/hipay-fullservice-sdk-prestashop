@@ -33,11 +33,14 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-    	sleep(3);	
+		// Disconnect User from cart
+        HipayClass::unsetCart();
+        // block 5s because
+    	sleep(5);	
     	// récupération des informations en GET ou POST venant de la page de paiement
     	$cart_id 		= Tools::getValue('orderId');
     	$transac 		= Tools::getValue('reference'); 
-    	$context 	= Context::getContext();
+    	$context 		= Context::getContext();
     	// --------------------------------------------------------------------------
     	// vérification si les informations ne sont pas = à FALSE
     	if(!$cart_id){
@@ -73,10 +76,7 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 			'currency' 		=> $context->currency->iso_code,
 			'email'			=> $context->customer->email
 		));
-
-        // Disconnect User from cart
-        HipayClass::unsetCart();
-            
+                   
 		$this->setTemplate ( 'payment_accept.tpl' );
 	}
 }
