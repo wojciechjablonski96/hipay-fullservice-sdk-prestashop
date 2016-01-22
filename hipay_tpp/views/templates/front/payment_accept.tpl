@@ -45,67 +45,69 @@
 *	  })();
 *	</script>
 *}
-{literal}
-	<script>
-		window.onload = function() {
-			if (!window.location.hash) {
-				window.location = window.location + '#loaded';
-				window.location.reload();
-			}
-		}
-	</script>
-{/literal}
+
 {capture name=path}{l s='HiPay payment.' mod='hipay_tpp'}{/capture}
 <h2>{l s='Payment Summary' mod='hipay_tpp'}</h2>
 
 {if $id_order == '' && $transaction == 0}
 
-<div class="hipay-fullwidth ">
-	<div class="hipay-clearfix ">
-		<img src="{$base_dir_ssl}modules/hipay_tpp/views/img/hipay-fullservice_450x96.png" title="HiPay Fullservice" alt="HiPay Fullservice" />
+	{literal}
+		<script>
+			window.onload = function() {
+				if (!window.location.hash) {
+					window.location = window.location + '#loaded';
+					window.location.reload();
+				}
+			}
+		</script>
+	{/literal}
+
+	<div class="hipay-fullwidth ">
+		<div class="hipay-clearfix ">
+			<img src="{$base_dir_ssl}modules/hipay_tpp/views/img/hipay-fullservice_450x96.png" title="HiPay Fullservice" alt="HiPay Fullservice" />
+		</div>
+		<div class="hipay-clearfix "><h3>{l s='Chargement en cours' mod='hipay_tpp'}...</h3></div>
+		<div class="spinner"></div>
 	</div>
-	<div class="hipay-clearfix "><h3>{l s='Chargement en cours' mod='hipay_tpp'}...</h3></div>
-	<div class="spinner"></div>
-</div>
 
-<style type="text/css">
+	<style type="text/css">
 
-	.hipay-fullwidth { width:100%;padding-top: 50px; }
-	.hipay-clearfix { clear:both;text-align:center; }
-	.spinner {
-	  width: 40px;
-	  height: 40px;
-	  background-color: #007CC1;
+		.hipay-fullwidth { width:100%;padding-top: 50px; }
+		.hipay-clearfix { clear:both;text-align:center; }
+		.spinner {
+		  width: 40px;
+		  height: 40px;
+		  background-color: #007CC1;
 
-	  margin: 100px auto;
-	  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-	  animation: sk-rotateplane 1.2s infinite ease-in-out;
-	}
+		  margin: 100px auto;
+		  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+		  animation: sk-rotateplane 1.2s infinite ease-in-out;
+		}
 
-	@-webkit-keyframes sk-rotateplane {
-	  0% { -webkit-transform: perspective(120px) }
-	  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-	  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
-	}
+		@-webkit-keyframes sk-rotateplane {
+		  0% { -webkit-transform: perspective(120px) }
+		  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+		  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+		}
 
-	@keyframes sk-rotateplane {
-	  0% { 
-	    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-	    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
-	  } 50% { 
-	    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-	    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
-	  } 100% { 
-	    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-	    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-	  }
-	}
-</style>
+		@keyframes sk-rotateplane {
+		  0% { 
+		    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+		  } 50% { 
+		    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+		  } 100% { 
+		    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		  }
+		}
+	</style>
 {else}
-<p>{l s='Your order has been taken into account.' mod='hipay_tpp'}
-    <br /><br />{l s='It will be available in a few moments in your' mod='hipay_tpp'} <strong><a href="{$link->getPageLink('history', true)}">{l s='order history' mod='hipay_tpp'}</a></strong>
-</p>
-<p><a href="index.php">{l s='Back to home' mod='hipay_tpp'}</a></p>
+	<p>{l s='Your order has been taken into account.' mod='hipay_tpp'}
+	    <br /><br />{l s='It will be available in a few moments in your' mod='hipay_tpp'} <strong><a href="{$link->getPageLink('history', true)}">{l s='order history' mod='hipay_tpp'}</a></strong>
+	</p>
+	<p><a href="index.php">{l s='Back to home' mod='hipay_tpp'}</a></p>
 {/if}
 
 {*
