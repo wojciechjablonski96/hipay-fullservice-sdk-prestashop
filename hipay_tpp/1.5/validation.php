@@ -93,8 +93,10 @@ if (!Validate::isLoadedObject($cart)) {
 	die('Cart empty');
 }
 
+//LOG
+HipayLog('---------- Boutique N°'.$cart->id_shop);
 //LOG 
-HipayLog('---------- panier exist');
+HipayLog('---------- panier exist ID = '.$cart->id);
 
 try{
 	// pose du lock SQL via SELECT FOR UPDATE sur la ligne panier
@@ -128,19 +130,35 @@ try{
 	);
 
 	// init numero statuts
-	$stt_challenged = Configuration::get('HIPAY_CHALLENGED');
-	$stt_pending	= Configuration::get('HIPAY_PENDING');
-	$stt_expired	= Configuration::get('HIPAY_EXPIRED');
-	$stt_authorized = Configuration::get('HIPAY_AUTHORIZED');
-	$stt_partially 	= Configuration::get('HIPAY_PARTIALLY_CAPTURED');
-	$stt_refunded_rq= Configuration::get('HIPAY_REFUND_REQUESTED');
-	$stt_refunded	= Configuration::get('HIPAY_REFUNDED');
-	$stt_chargedback= Configuration::get('HIPAY_CHARGEDBACK');
-	$stt_c_refused 	= Configuration::get('HIPAY_CAPTURE_REFUSED');
-	$stt_denied		= Configuration::get('HIPAY_DENIED');
+	$stt_challenged = Configuration::get('HIPAY_CHALLENGED',null,null,1);
+	$stt_pending	= Configuration::get('HIPAY_PENDING',null,null,1);
+	$stt_expired	= Configuration::get('HIPAY_EXPIRED',null,null,1);
+	$stt_authorized = Configuration::get('HIPAY_AUTHORIZED',null,null,1);
+	$stt_partially 	= Configuration::get('HIPAY_PARTIALLY_CAPTURED',null,null,1);
+	$stt_refunded_rq= Configuration::get('HIPAY_REFUND_REQUESTED',null,null,1);
+	$stt_refunded	= Configuration::get('HIPAY_REFUNDED',null,null,1);
+	$stt_chargedback= Configuration::get('HIPAY_CHARGEDBACK',null,null,1);
+	$stt_c_refused 	= Configuration::get('HIPAY_CAPTURE_REFUSED',null,null,1);
+	$stt_denied		= Configuration::get('HIPAY_DENIED',null,null,1);
 	$stt_cancel		= _PS_OS_CANCELED_;
 	$stt_error		= _PS_OS_ERROR_;
 	$stt_payment	= _PS_OS_PAYMENT_;
+	$arrStatut = array(
+			'stt_challenged = '.$stt_challenged,
+			'stt_pending = '.$stt_pending,
+			'stt_expired = '.$stt_expired,
+			'stt_authorized = '.$stt_authorized,
+			'stt_partially = '.$stt_partially,
+			'stt_refunded_rq = '.$stt_refunded_rq,
+			'stt_chargedback = '.$stt_chargedback,
+			'stt_c_refused = '.$stt_c_refused,
+			'stt_denied = '.$stt_denied,
+			'stt_cancel = '.$stt_cancel,
+			'stt_error = '.$stt_error,
+			'stt_payment = '.$stt_payment
+		);
+	// LOG
+	HipayLog('Vérification configuration statut = [ '.print_r($arrStatut,true).' ]');
 
 	//LOG 
 	HipayLog('---------- config statut intialisé');
@@ -432,29 +450,44 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 		// création de la commande sur le statut authorized
 		// car pas de commande
 		$tmpshop = new Shop((int)$cart->id_shop);
-		$hipay->validateOrder(
-			$cart->id, 
-			$statut, 
-			(float)$callback_arr['authorized_amount'], 
-			$hipay->displayName . ' via ' . ucfirst($callback_arr['payment_product']), 
-			$message, 
-			$orderPayment, 
-			NULL, 
-			false, 
-			$cart->secure_key,
-			$tmpshop
-		);
+		//LOG
+		HipayLog('--------------- SHOP Id = '.$cart->id_shop);
+		HipayLog('--------------- Début validateOrder ');
+		try{
+			$hipay->validateOrder(
+				$cart->id, 
+				$statut, 
+				(float)$callback_arr['authorized_amount'], 
+				$hipay->displayName . ' via ' . ucfirst($callback_arr['payment_product']), 
+				$message, 
+				$orderPayment, 
+				NULL, 
+				false, 
+				$cart->secure_key,
+				$tmpshop
+			);
+		}catch(Exception $e){
+			// on catch mais on continue le traitement
+			HipayLog($e->getCode().' : ' . $e->getMessage());
+		}
+		HipayLog('--------------- Fin validateOrder ');
 		// init order for message HIPAY_CAPTURE
 		$id_order = $hipay->currentOrder;
+		// LOG
+		HipayLog('--------------- ID Current Order = '.$id_order);
 		// Init / MAJ de la ligne message HIPAY_CAPTURE
 		addHipayCaptureMessage($callback_arr,$id_order);
 		$new_order = new order($id_order);
 		// MAJ ligne transaction pour le status 116
-		if ($callback_arr['status'] == HIPAY_STATUS_AUTHORIZED) {			
+		if ($callback_arr['status'] == HIPAY_STATUS_AUTHORIZED) {	
+			// LOG
+			HipayLog('--------------- STATUS 116 début update order payment');		
 			$sql = "UPDATE `" . _DB_PREFIX_ . "order_payment` SET 
 						`amount` = '" . $callback_arr['captured_amount'] . "'
                         WHERE `order_reference`='" . $new_order->reference . "'";
 			Db::getInstance()->execute($sql);
+			// LOG
+			HipayLog('--------------- STATUS 116 fin update order payment');
 		}
 		// transaction table Hipay
         $sql = "
@@ -567,7 +600,7 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 			$order_history->changeIdOrderState($orderState, $id_order,true);
 			//LOG 
 			HipayLog('--------------- changeIdOrderState('.$orderState.','.$id_order.')');
-			$order_history->addWithemail();
+			$order_history->add();
 
 			//LOG 
 			HipayLog('--------------- statut changé = '.$orderState);
@@ -880,6 +913,8 @@ function refundOrder($callback_arr, $order, $hipay, $statut) {
  * @param2 $id_order     -> ID de la commande
  */
 function addHipayCaptureMessage($callback_arr,$id_order){
+	//LOG
+	HipayLog('--------------- Début addHipayCaptureMessage');
 	// Init / MAJ de la ligne message HIPAY_CAPTURE
 	$tag = 'HIPAY_CAPTURE ';
 	$amount = ((int)$callback_arr['status'] == HIPAY_STATUS_AUTHORIZED ? '0.00' : (!empty($callback_arr['captured_amount']) ? $callback_arr['captured_amount']:'0.00'));
@@ -909,6 +944,8 @@ function addHipayCaptureMessage($callback_arr,$id_order){
 			$msg->add();
 		}
 	}
+	//LOG
+	HipayLog('--------------- Fin addHipayCaptureMessage');
 }
 /*
  * fonction permettant de contrôler si il y a déjà eu un statut paiement accepté
