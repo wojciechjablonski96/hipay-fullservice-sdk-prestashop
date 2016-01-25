@@ -62,14 +62,17 @@ class HiPay_TppPaymentModuleFrontController extends ModuleFrontController {
 			$sql_add_cart_id = "INSERT INTO `" . _DB_PREFIX_ . "hipay_cart_sent` (`cart_id`, `timestamp`)
             VALUES('" . (int)$cart->id . "', NOW() )";
 			Db::getInstance()->execute( $sql_add_cart_id );
-		}else{
+		}
+		/*
+		// TPPPRS-23
+		else{
 			// Found. Duplicate cart
 			$duplicate_status_msg = HipayClass::duplicateCart();
 			if($duplicate_status_msg)
 			{
 				$override_payment_mode = true;
 			}
-		}
+		}*/
 
 		
 		$context->smarty->assign(array(
@@ -102,11 +105,13 @@ class HiPay_TppPaymentModuleFrontController extends ModuleFrontController {
 		}
 		
 		// Last check, if $override_payment_mode = true then override all payement modes and force error message display
+		/*
+		// TPPPRS-23
 		if($override_payment_mode) {
 			// Override to mode page cart duplicated
 			$payment_mode = 4;
 			// Use $duplicate_status_msg to display msg err
-		}
+		}*/
 
 		// Different calls depending on Payment mode
 		switch ($payment_mode) {
