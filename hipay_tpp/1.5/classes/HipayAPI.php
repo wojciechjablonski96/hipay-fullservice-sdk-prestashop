@@ -381,6 +381,10 @@ class HipayApi extends ObjectModel {
 			'css' => Configuration::get('HIPAY_CSS_URL'),
 			'display_selector' => $display_selector
 		);
+		// TPPPRS-21
+		if($birthdate == 0){
+			unset($data['birthdate']);
+		}
 
 		// Merchant display name limited to 32 characters only
 		if ($data_type == 'iframe') {

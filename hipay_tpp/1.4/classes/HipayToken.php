@@ -250,6 +250,10 @@ class HipayToken extends ObjectModel {
 				'authentication_indicator' => strval($authentication_indicator),
 				'eci' => $eci,
 			);
+			// TPPPRS-21
+			if($birthdate == 0){
+				unset($data['birthdate']);
+			}
 			return $data;
 		}
 		return false;
