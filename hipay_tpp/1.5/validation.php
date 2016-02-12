@@ -511,22 +511,9 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
         // Check if card is either an Americain-express, CB, Mastercard et Visa card.
 		if ($callback_arr['payment_product'] == 'american-express' || $callback_arr['payment_product'] == 'cb' || $callback_arr['payment_product'] == 'visa' || $callback_arr['payment_product'] == 'mastercard') {
 			// Memorize new card only if card used can be "recurring"
-			/*$sql_insert = "
-				INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` 
-				(`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
-                VALUES 
-                ('" . $new_order->id_customer . "', 
-                	'" . $callback_arr['payment_method']['token'] . "', 
-                	'" . $callback_arr['payment_method']['brand'] . "', 
-                	'" . $callback_arr['payment_method']['pan'] . "', 
-                	'" . $callback_arr['payment_method']['card_holder'] . "', 
-                	'" . $callback_arr['payment_method']['card_expiry_month'] . "', 
-                	'" . $callback_arr['payment_method']['card_expiry_year'] . "', 
-                	'" . $callback_arr['payment_method']['issuer'] . "', 
-                	'" . $callback_arr['payment_method']['country'] . "');";
 			// LOG
 			HipayLog('--------------- TABLE HIPAY = '. $sql_insert);
-			Db::getInstance()->execute($sql_insert);*/
+			Db::getInstance()->execute($sql_insert);
 			$customer_id = $new_order->id_customer;
 			$token = $callback_arr['payment_method']['token'];
 			$brand = $callback_arr['payment_method']['brand'];
@@ -543,9 +530,7 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 	        HipayLogger::addLog('SQL', HipayLogger::APICALL, $sql);
 			$result = Db::getInstance()->getRow($sql);
 
-			if ($result['id']) {
-				// 'Already exists record for order_id';
-			} else {
+			if (!$result['id']) {
 				// 'insert in DB';
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` (`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
 	                VALUES('" . $customer_id . "', '" . $token . "', '" . $brand . "', '" . $pan . "', '" . $card_holder . "', '" . $card_expiry_month . "', '" . $card_expiry_year . "', '" . $issuer . "', '" . $country . "')";
