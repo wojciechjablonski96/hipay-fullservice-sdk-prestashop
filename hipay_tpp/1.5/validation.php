@@ -106,7 +106,7 @@ try{
 	#################################################################
 	#################################################################
 	$sql = 'begin;';
-	$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. $id_cart .' FOR UPDATE;';
+	$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. (int)$id_cart .' FOR UPDATE;';
 	
 	//LOG 
 	HipayLog('********** SQL LOCK = '. $sql);
@@ -180,7 +180,7 @@ try{
 		//$id_order = Order::getOrderByCartId($id_cart);
 		$sql = 'SELECT `id_order`
 				FROM `'._DB_PREFIX_.'orders`
-				WHERE `id_cart` = '.$id_cart;
+				WHERE `id_cart` = '.(int)$id_cart;
         $result = Db::getInstance()->getRow($sql);
         $id_order = isset($result['id_order']) ? $result['id_order'] : false;
 		if($id_order){
@@ -493,14 +493,14 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
         $sql = "
         		INSERT INTO `" . _DB_PREFIX_ . "hipay_transactions`
                     (`cart_id`,`order_id`,`customer_id`,`transaction_reference`,`device_id`,`ip_address`,`ip_country`,`token`) VALUES 
-                    ('" . $cart->id . "',
-                    	'" . $id_order . "',
-                    	'" . $new_order->id_customer . "',
-                    	'" . $callback_arr['transaction_reference'] . "',
+                    ('" . (int)$cart->id . "',
+                    	'" . (int)$id_order . "',
+                    	'" . (int)$new_order->id_customer . "',
+                    	'" . pSQL($callback_arr['transaction_reference']) . "',
                     	'',
-                    	'" . $callback_arr['ip_address'] . "',
-                    	'" . $callback_arr['ip_country'] . "',
-                    	'" . $callback_arr['payment_method']['token'] . "');";
+                    	'" . pSQL($callback_arr['ip_address']) . "',
+                    	'" . pSQL($callback_arr['ip_country']) . "',
+                    	'" . pSQL($callback_arr['payment_method']['token']) . "');";
 		// LOG
         HipayLog('--------------- TABLE HIPAY = '. $sql);
         if(!Db::getInstance()->execute($sql)){
@@ -511,22 +511,31 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
         // Check if card is either an Americain-express, CB, Mastercard et Visa card.
 		if ($callback_arr['payment_product'] == 'american-express' || $callback_arr['payment_product'] == 'cb' || $callback_arr['payment_product'] == 'visa' || $callback_arr['payment_product'] == 'mastercard') {
 			// Memorize new card only if card used can be "recurring"
-			$sql_insert = "
-				INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` 
-				(`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
-                VALUES 
-                ('" . $new_order->id_customer . "', 
-                	'" . $callback_arr['payment_method']['token'] . "', 
-                	'" . $callback_arr['payment_method']['brand'] . "', 
-                	'" . $callback_arr['payment_method']['pan'] . "', 
-                	'" . $callback_arr['payment_method']['card_holder'] . "', 
-                	'" . $callback_arr['payment_method']['card_expiry_month'] . "', 
-                	'" . $callback_arr['payment_method']['card_expiry_year'] . "', 
-                	'" . $callback_arr['payment_method']['issuer'] . "', 
-                	'" . $callback_arr['payment_method']['country'] . "');";
 			// LOG
-			HipayLog('--------------- TABLE HIPAY = '. $sql_insert);
-			Db::getInstance()->execute($sql_insert);
+			$customer_id = $new_order->id_customer;
+			$token = $callback_arr['payment_method']['token'];
+			$brand = $callback_arr['payment_method']['brand'];
+			$pan = $callback_arr['payment_method']['pan'];
+			$card_holder = $callback_arr['payment_method']['card_holder'];
+			$card_expiry_month = $callback_arr['payment_method']['card_expiry_month'];
+			$card_expiry_year = $callback_arr['payment_method']['card_expiry_year'];
+			$issuer = $callback_arr['payment_method']['issuer'];
+			$country = $callback_arr['payment_method']['country'];
+
+			$sql = "SELECT * FROM `" . _DB_PREFIX_ . "hipay_tokens`
+	                        WHERE `customer_id`='" . (int)$customer_id . "'
+	                        AND `token`='" . pSQL($token) . "'";
+	        HipayLogger::addLog('SQL', HipayLogger::APICALL, $sql);
+			$result = Db::getInstance()->getRow($sql);
+
+			if (!$result['id']) {
+				// LOG
+        		HipayLog('--------------- Enregistrement nouveau Token');
+				// 'insert in DB';
+				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` (`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
+	                VALUES('" . (int)$customer_id . "', '" . pSQL($token) . "', '" . pSQL($brand) . "', '" . pSQL($pan) . "', '" . pSQL($card_holder) . "', '" . pSQL($card_expiry_month) . "', '" . pSQL($card_expiry_year) . "', '" . pSQL($issuer) . "', '" . pSQL($country) . "')";
+				Db::getInstance()->execute($sql_insert);
+			}
 		}
 		//LOG
 		HipayLog('--------------- currentOrder = '.$hipay->currentOrder);
@@ -722,14 +731,14 @@ function captureOrder($callback_arr = null, $order = null) {
 		if ($callback_arr['status'] == HIPAY_STATUS_CAPTURE_REQUESTED || $callback_arr['status'] == HIPAY_STATUS_CAPTURED) {
 			$sql = 'SELECT `id_order_payment`
 				FROM `'._DB_PREFIX_.'order_payment`
-				WHERE order_reference="' . $order->reference . ' LIMIT 1";';
+				WHERE order_reference="' . pSQL($order->reference) . ' LIMIT 1";';
 	        $result = Db::getInstance()->getRow($sql);
 	        $id_orderP = isset($result['id_order_payment']) ? $result['id_order_payment'] : false;
 			if($id_orderP){
 				$sql_update = "
 					UPDATE `" . _DB_PREFIX_ . "order_invoice_payment`
-                    SET `id_order_payment` = " . $id_orderP . "
-                    WHERE `id_order` = " . $order->id;
+                    SET `id_order_payment` = " . (int)$id_orderP . "
+                    WHERE `id_order` = " . (int)$order->id;
 				Db::getInstance()->execute($sql_update);
 			}
 		}
@@ -786,7 +795,7 @@ function refundOrder($callback_arr, $order, $hipay, $statut) {
 	HipayLog('--------------- Début refundOrder'); 
 
 	// Modif to update payment if refund has already been made once.
-	$payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE payment_method='HiPay - refund' AND order_reference='" . $order->reference . "'";
+	$payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE payment_method='HiPay - refund' AND order_reference='" . pSQL($order->reference) . "'";
 	
 	HipayLog('--------------- SQL Si déjà un refund = '. $payment_message_sql);
 
@@ -969,7 +978,7 @@ function controleIfStatushistoryExist($id_order, $stt_payment, $orderState, $for
 	if($bGoGo && $id_order){
 		$sql = 'SELECT COUNT(id_order_history) as count
 				FROM `'._DB_PREFIX_.'order_history`
-				WHERE `id_order` = '.$id_order.' AND id_order_state = '.$stt_payment;
+				WHERE `id_order` = '.(int)$id_order.' AND id_order_state = '.(int)$stt_payment;
 
 		//LOG
 		HipayLog('--------------- SQL de contrôle = ' . $sql);
