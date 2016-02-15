@@ -512,8 +512,6 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 		if ($callback_arr['payment_product'] == 'american-express' || $callback_arr['payment_product'] == 'cb' || $callback_arr['payment_product'] == 'visa' || $callback_arr['payment_product'] == 'mastercard') {
 			// Memorize new card only if card used can be "recurring"
 			// LOG
-			HipayLog('--------------- TABLE HIPAY = '. $sql_insert);
-			Db::getInstance()->execute($sql_insert);
 			$customer_id = $new_order->id_customer;
 			$token = $callback_arr['payment_method']['token'];
 			$brand = $callback_arr['payment_method']['brand'];
@@ -531,9 +529,11 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 			$result = Db::getInstance()->getRow($sql);
 
 			if (!$result['id']) {
+				// LOG
+        		HipayLog('--------------- Enregistrement nouveau Token');
 				// 'insert in DB';
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` (`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
-	                VALUES('" . $customer_id . "', '" . $token . "', '" . $brand . "', '" . $pan . "', '" . $card_holder . "', '" . $card_expiry_month . "', '" . $card_expiry_year . "', '" . $issuer . "', '" . $country . "')";
+	                VALUES('" . $customer_id . "', '" . $token . "', '" . $brand . "', '" . $pan . "', '" . addslashes($card_holder) . "', '" . $card_expiry_month . "', '" . $card_expiry_year . "', '" . $issuer . "', '" . addslashes($country) . "')";
 				Db::getInstance()->execute($sql_insert);
 			}
 		}
