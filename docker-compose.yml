@@ -1,21 +1,20 @@
 web:
   build: .
-  container_name: hipay-tpp-prestashop
   volumes:
     - .:/var/www/html
   ports:
-    - "8080:80"
+    - "8085:80"
   environment:
-    PS_DOMAIN localhost
-    DB_PORT 3306
-    DB_NAME hipay_ps
-    DB_USER hipay
-    DB_PASSWD hipay123
-    ADMIN_MAIL demo@hipay.com
-    ADMIN_PASSWD hipay123
-    PS_LANGUAGE en
-    PS_COUNTRY gb
-    PS_INSTALL_AUTO 1
-    PS_DEV_MODE 1
-    PS_FOLDER_ADMIN admin-hipay
-    PS_FOLDER_INSTALL installOLD
+    - PS_DOMAIN localhost
+    - DB_PORT 3306
+    - DB_NAME hipay_ps
+    - DB_USER hipay
+    - DB_PASSWD hipay123
+    - ADMIN_MAIL demo@hipay.com
+    - ADMIN_PASSWD hipay123
+    - PS_LANGUAGE en
+    - PS_COUNTRY gb
+    - PS_INSTALL_AUTO 1
+    - PS_DEV_MODE 1
+    - PS_FOLDER_ADMIN admin-hipay
+    - PS_FOLDER_INSTALL installOLD
