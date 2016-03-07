@@ -6,4 +6,4 @@ test:
     - docker-compose build
     - docker-compose up -d
   override:
-    - curl --retry 2 --retry-delay 5 -v http://localhost:8085
+    - curl --retry 2 --retry-delay 5 -v http://localhost
