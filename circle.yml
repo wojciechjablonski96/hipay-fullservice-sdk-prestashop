@@ -3,6 +3,8 @@ machine:
     - docker
 test:
   pre:
+    - chmod +x -r conf/
+    - chmod +x -r src/
     - docker-compose build
     - docker-compose up -d
   override:
