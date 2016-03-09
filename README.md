@@ -8,6 +8,10 @@ The **HiPay Fullservice for Prestashop 1.4.x - 1.5.x - 1.6.x** is a PHP module w
 
 Read the **[project documentation][doc-home]** for comprehensive information about the requirements, general workflow and installation procedure.
 
+## Latest package for installation/upgrade in Prestashop Module Management 
+
+Download the package ZIP available in the folder "_package-ready-for-prestashop/hipay_tpp_1-X-X.zip_"
+
 ## Resources
 - [Full project documentation][doc-home] — To have a comprehensive understanding of the workflow and get the installation procedure
 - [HiPay Support Center][hipay-help] — To get technical help from HiPay
