@@ -13,6 +13,7 @@ Read the **[project documentation][doc-home]** for comprehensive information abo
 - [HiPay Support Center][hipay-help] — To get technical help from HiPay
 - [Issues][project-issues] — To report issues, submit pull requests and get involved (see [Apache 2.0 License][project-license])
 - [Change log][project-changelog] — To check the changes of the latest versions
+- [Contributing guidelines][project-contributing] — To contribute to our source code
 
 ## Features
 
@@ -36,8 +37,9 @@ The **HiPay Fullservice for Prestashop 1.4.x - 1.5.x - 1.6.x** is available unde
 [hipay-help]: http://help.hipay.com
 
 [project-issues]: https://github.com/hipay/hipay-fullservice-sdk-prestashop/issues
-[project-license]: https://github.com/hipay/hipay-fullservice-sdk-prestashop/blob/master/LICENSE.md
-[project-changelog]: https://github.com/hipay/hipay-fullservice-sdk-prestashop/blob/master/CHANGELOG.md
+[project-license]: LICENSE.md
+[project-changelog]: CHANGELOG.md
+[project-contributing]: CONTRIBUTING.md
 
 
 > **Technical support:**
