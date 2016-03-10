@@ -2037,7 +2037,7 @@ class HiPay_Tpp extends PaymentModule {
 		// refonte du calcul du montant restant à rembourser...
 		$sum = 0.0;
 		$sum_refund = 0.0;
-		$sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE order_reference='" . $order_reference . "';";
+		$sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE order_reference='" . pSQL($order_reference) . "';";
 		if ($results = Db::getInstance()->ExecuteS($sql)){
 			foreach ($results as $row){
 				if($row['payment_method'] == 'HiPay - refund'){

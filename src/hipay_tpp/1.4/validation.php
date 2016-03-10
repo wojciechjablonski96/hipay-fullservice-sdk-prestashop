@@ -42,7 +42,7 @@ try {
     $log_state = ($_POST['state']) ? $_POST['state'] : 'error'; // Sets to error if nothing is found
     $log_status = ($_POST['status']) ? $_POST['status'] : 'error'; // Sets to error if nothing is found
     HipayLogger::addLog ( $hipay->l ( 'Callback recieved', 'hipay' ), HipayLogger::NOTICE, 'Callback recieved - cid : ' . ( int ) $_POST['order']['id'] . ' - state : ' . $log_state . ' - status : ' . $log_status . ' - content : '.mysql_real_escape_string($content) );
-    $sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_callbacks` (`callback`) VALUES ('".mysql_real_escape_string($content)."');";
+    $sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_callbacks` (`callback`) VALUES ('".mysql_real_escape_string(pSQL($content))."');";
     $insert = Db::getInstance()->execute( $sql_insert );
     if($insert)
     {
