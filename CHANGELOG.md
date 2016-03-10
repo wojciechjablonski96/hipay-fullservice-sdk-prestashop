@@ -1,9 +1,3 @@
-# Version 1.3.0
-migrate the module with Docker
-integrate Circle CI for integration continue
-add LICENSE, README, CHANGELOG, CONTRIBUTING
-New architecture files in this GitHub repository
-
 # Version 1.2.0
 Fix - birthday is a date valide, we add it in the flux transaction then not
 Fix - delete the control about id cart when the customer return in the payment page

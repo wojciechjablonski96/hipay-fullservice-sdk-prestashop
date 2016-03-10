@@ -1,6 +1,6 @@
-# Contributing to the HiPay Fullservice cartridge for Prestashop 1.4.x - 1.5.x - 1.6.x
+# Contributing to the HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x
 
-Contributions to the HiPay Fullservice cartridge for Prestashop 1.4.x - 1.5.x - 1.6.x should be made via GitHub [pull
+Contributions to the HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x should be made via GitHub [pull
 requests][pull-requests] and discussed using
 GitHub [issues][issues].
 
@@ -20,7 +20,7 @@ Any contributions should pass all tests.
 
 ## Licensing
 
-The HiPay Fullservice cartridge for Prestashop 1.4.x - 1.5.x - 1.6.x is released under an [Apache
+The HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x is released under an [Apache
 2.0][project-license] license. Any code you submit will be
 released under that license.
 
