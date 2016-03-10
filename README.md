@@ -1,8 +1,8 @@
-# HiPay Fullservice for PrestaShop 1.4.x - 1.5.x - 1.6.x
+# HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x
 
 [![Build Status](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master.svg?style=shield)](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master) [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-fullservice-sdk-prestashop/master/LICENSE.md)
 
-The **HiPay Fullservice for PrestaShop 1.4.x - 1.5.x - 1.6.x** is a PHP module which allows you to accept payments in your PrestaShop, offering innovative features to reduce shopping cart abandonment rates, optimize success rates and enhance the purchasing process on merchants’ sites to significantly increase business volumes without additional investments in the solution CMS e-commerce PrestaShop.
+The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is a PHP module which allows you to accept payments in your PrestaShop, offering innovative features to reduce shopping cart abandonment rates, optimize success rates and enhance the purchasing process on merchants’ sites to significantly increase business volumes without additional investments in the solution CMS e-commerce PrestaShop.
 
 ## Getting started
 
@@ -34,7 +34,7 @@ Download the package ZIP available in the folder "_package-ready-for-prestashop_
 
 ## License
 
-The **HiPay Fullservice for PrestaShop 1.4.x - 1.5.x - 1.6.x** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
+The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
 
 [doc-home]: https://github.com/hipay/hipay-fullservice-sdk-prestashop/wiki
 
