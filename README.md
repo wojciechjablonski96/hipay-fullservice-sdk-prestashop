@@ -2,15 +2,15 @@
 
 [![Build Status](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master.svg?style=shield)](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master) [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-fullservice-sdk-prestashop/master/LICENSE.md)
 
-The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is a PHP module which allows you to accept payments in your PrestaShop online store, offering innovative features to reduce shopping cart abandonment rates, optimize success rates and enhance the purchasing process on merchants’ sites to significantly increase business volumes without additional investments in the solution CMS e-commerce PrestaShop.
+The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is a PHP module which allows you to accept payments in your PrestaShop online store, offering innovative features to reduce shopping cart abandonment rates, optimize success rates and enhance the purchasing process on merchants’ sites to significantly increase business volumes without additional investments in the PrestaShop e-commerce CMS solution.
 
 ## Getting started
 
 Read the **[project documentation][doc-home]** for comprehensive information about the requirements, general workflow and installation procedure.
 
-## Latest package for installation/upgrade in Prestashop Module Management 
+## Latest package for installation/upgrade in PrestaShop Module Management 
 
-Download the package ZIP available in the folder "_package-ready-for-prestashop_" : [Download the package](package-ready-for-prestashop/hipay_tpp_1-3-x.zip)
+Download the ZIP package available in the "_package-ready-for-prestashop_" folder: [Download the package](package-ready-for-prestashop/hipay_tpp_1-3-x.zip)
 
 ## Resources
 - [Full project documentation][doc-home] — To have a comprehensive understanding of the workflow and get the installation procedure
@@ -21,16 +21,16 @@ Download the package ZIP available in the folder "_package-ready-for-prestashop_
 
 ## Features
 
-- Compatibility Prestashop 1.4.x - 1.5.x - 1.6.x
-- Enabling the 3D secure
-- Oneclick configurable by custom rules
-- Managing multiple cards per customer for payment Oneclick
-- Iframe integration, hosted page and API custom cards
-- Mail management for transactions awaiting validation of fraud (challenge)
+- Compatibility with PrestaShop 1.4.x - 1.5.x - 1.6.x
+- 3-D Secure enabling/disabling
+- One-Click option configuration with custom rules
+- Management of multiple cards per customer for one-click payment 
+- iFrame integration, hosted page and custom card API
+- Mail management for transactions pending fraud validation (challenged)
 - Manual and automatic capture
 - Capture and partial refund
-- Payment in x times without fees (dev in progress)
-- Subscription management (dev in progress)
+- Payment in x installments without fees (development in progress)
+- Subscription management (development in progress)
 
 ## License
 
