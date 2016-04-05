@@ -392,9 +392,10 @@ class HipayToken extends ObjectModel {
 		$sql = "SELECT * FROM `" . _DB_PREFIX_ . "hipay_tokens`
                         WHERE `customer_id`='" . $customer_id . "'
                         AND `token`='" . $token . "'";
+        HipayLogger::addLog('SQL', HipayLogger::APICALL, $sql);
 		$result = Db::getInstance()->getRow($sql);
 
-		if ($result ['id']) {
+		if ($result['id']) {
 			return true;
 			// 'Already exists record for order_id';
 		} else {

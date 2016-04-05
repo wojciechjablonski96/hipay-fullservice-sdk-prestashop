@@ -82,8 +82,8 @@ $result = Db::getInstance()->getValue($sql);
 if ($result) {
 	// Retrieve card token
 	$sql = "SELECT * FROM `" . _DB_PREFIX_ . "hipay_tokens`
-                        WHERE `customer_id`='" . $cart->id_customer . "'
-                        AND `token`='" . $_POST ['payment_method']->token . "'";
+                        WHERE `customer_id`='" . (int)$cart->id_customer . "'
+                        AND `token`='" . pSQL($_POST ['payment_method']->token) . "'";
 	$result = Db::getInstance()->getRow($sql);
 	// If no results found
 	if (!$result ['id']) {
@@ -91,7 +91,7 @@ if ($result) {
 		if ($_POST ['payment_product'] == 'american-express' || $_POST ['payment_product'] == 'cb' || $_POST ['payment_product'] == 'visa' || $_POST ['payment_product'] == 'mastercard') {
 			// Memorize new card only if card used can be "recurring"
 			$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens` (`customer_id`, `token`, `brand`, `pan`, `card_holder`, `card_expiry_month`, `card_expiry_year`, `issuer`, `country`)
-                VALUES('" . $cart->id_customer . "', '" . $_POST ['payment_method']->token . "', '" . $_POST ['payment_method']->brand . "', '" . $_POST ['payment_method']->pan . "', '" . $_POST ['payment_method']->card_holder . "', '" . $_POST ['payment_method']->card_expiry_month . "', '" . $_POST ['payment_method']->card_expiry_year . "', '" . $_POST ['payment_method']->issuer . "', '" . $_POST ['payment_method']->country . "')";
+                VALUES('" . (int)$cart->id_customer . "', '" . pSQL($_POST ['payment_method']->token) . "', '" . pSQL($_POST ['payment_method']->brand) . "', '" . pSQL($_POST ['payment_method']->pan) . "', '" . pSQL($_POST ['payment_method']->card_holder) . "', '" . pSQL($_POST ['payment_method']->card_expiry_month) . "', '" . pSQL($_POST ['payment_method']->card_expiry_year) . "', '" . pSQL($_POST ['payment_method']->issuer) . "', '" . pSQL($_POST ['payment_method']->country) . "')";
 			Db::getInstance()->execute($sql_insert);
 		}
 	}
@@ -470,12 +470,12 @@ function hipayValidateOrder($cart = null, $orderState = _PS_OS_ERROR_) {
 		if (isset($_POST ['payment_method']->token)) {
 			$new_order = new order($hipay->currentOrder);
 			$sql = "UPDATE `" . _DB_PREFIX_ . "order_payment`
-                        SET `card_number` = '" . $_POST['payment_method']->pan . "',
-                        `transaction_id` = '" . $_POST['transaction_reference'] . "',
-                        `card_brand` = '" . $_POST['payment_method']->brand . "',
-                        `card_expiration` = '" . $_POST['payment_method']->card_expiry_month . "/" . $_POST['payment_method']->card_expiry_year . "',
-                        `card_holder` = '" . $_POST['payment_method']->card_holder . "'
-                        WHERE `order_reference`='" . $new_order->reference . "'";
+                        SET `card_number` = '" . pSQL($_POST['payment_method']->pan) . "',
+                        `transaction_id` = '" . pSQL($_POST['transaction_reference']) . "',
+                        `card_brand` = '" . pSQL($_POST['payment_method']->brand) . "',
+                        `card_expiration` = '" . pSQL($_POST['payment_method']->card_expiry_month) . "/" . pSQL($_POST['payment_method']->card_expiry_year) . "',
+                        `card_holder` = '" . pSQL($_POST['payment_method']->card_holder) . "'
+                        WHERE `order_reference`='" . pSQL($new_order->reference) . "'";
 			Db::getInstance()->execute($sql);
 		}
 
@@ -599,13 +599,13 @@ function updateHistory($order_id = null, $newOrderStatusId = null) {
 	{
 	// Update orders
 	$sql_update = "UPDATE `" . _DB_PREFIX_ . "orders`
-        SET `current_state` = '" . $newOrderStatusId . "'
-        WHERE `id_order`='" . $order_id . "'";
+        SET `current_state` = '" . (int)$newOrderStatusId . "'
+        WHERE `id_order`='" . (int)$order_id . "'";
 	Db::getInstance()->execute($sql_update);
 
 	// Insert into order_history
 	$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "order_history` (`id_employee`, `id_order`, `id_order_state`, `date_add`)
-        VALUES ('0', '" . $order_id . "', '" . $newOrderStatusId . "', now());";
+        VALUES ('0', '" . (int)$order_id . "', '" . (int)$newOrderStatusId . "', now());";
 	Db::getInstance()->execute($sql_insert);
 
 	}
@@ -625,24 +625,24 @@ function updateHistory($order_id = null, $newOrderStatusId = null) {
 				// Update orders
 				$sql_update = "UPDATE `" . _DB_PREFIX_ . "orders`
                     SET `current_state` = '" . _PS_OS_PAYMENT_ . "'
-                    WHERE `id_order`='" . $order_id . "'";
+                    WHERE `id_order`='" . (int)$order_id . "'";
 				Db::getInstance()->execute($sql_update);
 
 				// Insert into order_history
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "order_history` (`id_employee`, `id_order`, `id_order_state`, `date_add`)
-                    VALUES ('0', '" . $order_id . "', '" . _PS_OS_PAYMENT_ . "', now());";
+                    VALUES ('0', '" . (int)$order_id . "', '" . _PS_OS_PAYMENT_ . "', now());";
 				Db::getInstance()->execute($sql_insert);
 			}
 			if ((boolean) $order->getHistory($context->language->id, Configuration::get('HIPAY_PARTIALLY_CAPTURED'))) {
 				// Update orders
 				$sql_update = "UPDATE `" . _DB_PREFIX_ . "orders`
                     SET `current_state` = '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "'
-                    WHERE `id_order`='" . $order_id . "'";
+                    WHERE `id_order`='" . (int)$order_id . "'";
 				Db::getInstance()->execute($sql_update);
 
 				// Insert into order_history
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "order_history` (`id_employee`, `id_order`, `id_order_state`, `date_add`)
-                    VALUES ('0', '" . $order_id . "', '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "', now());";
+                    VALUES ('0', '" . (int)$order_id . "', '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "', now());";
 				Db::getInstance()->execute($sql_insert);
 			}
 			HipayLogger::addLog($hipay->l('Callback process', 'hipay'), HipayLogger::ERROR, 'updateHistory status 116 order already exists - cid : ' . (int) $_POST ['order']->id);
@@ -765,64 +765,6 @@ function retrieveCallbackOS() {
 			}
 			break;
 
-		// Status _PS_OS_PAYMENT_
-		/*
-		  case 118 : // Captured
-		  $orderState = _PS_OS_PAYMENT_;
-		  if( $_POST['captured_amount'] < $_POST['authorized_amount'] )
-		  {
-		  $orderState = (Configuration::get('HIPAY_PARTIALLY_CAPTURED')) ? Configuration::get('HIPAY_PARTIALLY_CAPTURED') : HipayClass::getConfiguration('HIPAY_PARTIALLY_CAPTURED');
-		  }
-		  else {
-		  $orderState = (Configuration::get ( 'HIPAY_CAPTURED' )) ? Configuration::get ( 'HIPAY_CAPTURED' ) : HipayClass::getConfiguration('HIPAY_CAPTURED');
-		  }
-		  /*$orderState = _PS_OS_PAYMENT_;
-		  if( $_POST['captured_amount'] < $_POST['authorized_amount'] )
-		  {
-		  $orderState = (Configuration::get('HIPAY_PARTIALLY_CAPTURED')) ? Configuration::get('HIPAY_PARTIALLY_CAPTURED') : HipayClass::getConfiguration('HIPAY_PARTIALLY_CAPTURED');
-		  }
-		  // FORCING PRIVATE MSG FOR CAPTURE HERE
-		  // STATUS 119 does not seem to be called at all, even for partially captured calls.
-		  // Check if message exists already
-
-		  $cart = new Cart( (int)$_POST ['order']->id );
-		  $order_id = retrieveOrderId ( $cart->id );
-		  $order = new Order($order_id);
-		  captureOrder($order);
-
-		  $tag = 'HIPAY_CAPTURE ';
-		  $amount = $_POST['captured_amount'];
-		  $msgs = Message::getMessagesByOrderId($order_id, true);	//true for private messages (got example from AdminOrdersController)
-		  $create_new_msg = true;
-		  if(count($msgs))
-		  {
-		  foreach($msgs as $msg){
-		  $line = $msg['message'];
-		  if(startsWith($line, $tag)){
-		  $create_new_msg = false;
-		  $to_update_msg = new Message($msg['id_message']);
-		  $to_update_msg->message = $tag.$amount;
-		  $to_update_msg->save();
-		  break;
-		  }
-		  }
-		  }
-		  if($create_new_msg)
-		  {
-		  // Create msg
-		  $msg = new Message ();
-		  $message = 'HIPAY_CAPTURE '.$amount;
-		  $message = strip_tags ( $message, '<br>' );
-		  if (Validate::isCleanHtml ( $message )) {
-		  $msg->message = $message;
-		  $msg->id_order = intval ((int)$order_id);
-		  $msg->private = 1;
-		  $msg->add ();
-		  }
-		  }
-
-		 */
-		//	break;
 		// Status HIPAY_PARTIALLY_CAPTURED
 		case 119 : // Partially Captured
 			$orderState = (Configuration::get('HIPAY_PARTIALLY_CAPTURED')) ? Configuration::get('HIPAY_PARTIALLY_CAPTURED') : HipayClass::getConfiguration('HIPAY_PARTIALLY_CAPTURED');
@@ -917,9 +859,9 @@ function captureOrder($order = null) {
 	}
 
 	$sql = "UPDATE `" . _DB_PREFIX_ . "order_payment`
-            SET `amount` = '" . $_POST ['captured_amount'] . "',
-            `transaction_id` = '" . $_POST['transaction_reference'] . "'
-            WHERE order_reference='" . $order->reference . "'
+            SET `amount` = '" . pSQL($_POST ['captured_amount']) . "',
+            `transaction_id` = '" . pSQL($_POST['transaction_reference']) . "'
+            WHERE order_reference='" . pSQL($order->reference) . "'
             AND payment_method='" . $hipay->displayName . $local_card_name . "'
             AND amount>=0
             LIMIT 1";
@@ -1088,12 +1030,12 @@ function hipayResetOrderStatus($cart = null) {
 				// Update orders
 				$sql_update = "UPDATE `" . _DB_PREFIX_ . "orders`
                     SET `current_state` = '" . _PS_OS_PAYMENT_ . "'
-                    WHERE `id_order`='" . $order_id . "'";
+                    WHERE `id_order`='" . (int)$order_id . "'";
 				Db::getInstance()->execute($sql_update);
 
 				// Insert into order_history
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "order_history` (`id_employee`, `id_order`, `id_order_state`, `date_add`)
-                    VALUES ('0', '" . $order_id . "', '" . _PS_OS_PAYMENT_ . "', now());";
+                    VALUES ('0', '" . (int)$order_id . "', '" . _PS_OS_PAYMENT_ . "', now());";
 				Db::getInstance()->execute($sql_insert);
 			}
 			if ((boolean) $order->getHistory($context->language->id, Configuration::get('HIPAY_PARTIALLY_CAPTURED'))) {
@@ -1101,12 +1043,12 @@ function hipayResetOrderStatus($cart = null) {
 				// Update orders
 				$sql_update = "UPDATE `" . _DB_PREFIX_ . "orders`
                     SET `current_state` = '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "'
-                    WHERE `id_order`='" . $order_id . "'";
+                    WHERE `id_order`='" . (int)$order_id . "'";
 				Db::getInstance()->execute($sql_update);
 
 				// Insert into order_history
 				$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "order_history` (`id_employee`, `id_order`, `id_order_state`, `date_add`)
-                    VALUES ('0', '" . $order_id . "', '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "', now());";
+                    VALUES ('0', '" . (int)$order_id . "', '" . Configuration::get('HIPAY_PARTIALLY_CAPTURED') . "', now());";
 				Db::getInstance()->execute($sql_insert);
 			}
 			HipayLogger::addLog($hipay->l('Callback process', 'hipay'), HipayLogger::NOTICE, 'hipayResetOrderStatus status 116 cart already ok - cid : ' . (int) $_POST ['order']->id);
@@ -1141,8 +1083,8 @@ function addOrderPayment($id_order = 0, $amount_paid = 0) {
 	$total_paid_real = $_POST ['captured_amount'] - $_POST ['refunded_amount'];
 
 	$sql = "UPDATE `" . _DB_PREFIX_ . "orders`
-            SET `total_paid_real` = '" . $total_paid_real . "'
-            WHERE `id_order`='" . $id_order . "'";
+            SET `total_paid_real` = '" . pSQL($total_paid_real) . "'
+            WHERE `id_order`='" . (int)$id_order . "'";
 	$result = Db::getInstance()->execute($sql);
 
 	return $result;

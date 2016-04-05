@@ -16,7 +16,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.2.0';
+		$this->version = '1.3.0';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
@@ -1469,7 +1469,7 @@ class HiPay_Tpp extends PaymentModule {
 		$hipay_payment_mode = Configuration::get('HIPAY_PAYMENT_MODE');
 
 		if (Tools::getValue('cartMemorizeToken')) {
-			$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens_tmp` (`cart_id`) VALUES('" . $cart->id . "')";
+			$sql_insert = "INSERT INTO `" . _DB_PREFIX_ . "hipay_tokens_tmp` (`cart_id`) VALUES('" . (int)$cart->id . "')";
 			@Db::getInstance()->execute($sql_insert);
 		}
 
@@ -2379,7 +2379,7 @@ class HiPay_Tpp extends PaymentModule {
 		// p($order;Loaded);
 		// Verify the payment method name
 		// V1.5 $payment_method_sql = "SELECT payment_method FROM `" . _DB_PREFIX_ . "order_payment` WHERE order_reference='" . $orderLoaded->reference . "'";
-		$payment_method_sql = "SELECT payment FROM `" . _DB_PREFIX_ . "orders` WHERE id_order='" . $id_order . "'";
+		$payment_method_sql = "SELECT payment FROM `" . _DB_PREFIX_ . "orders` WHERE id_order='" . (int)$id_order . "'";
 		$payment_method = Db::getInstance()->executeS($payment_method_sql);
 
 		$hide_refund = false;
@@ -2413,7 +2413,7 @@ class HiPay_Tpp extends PaymentModule {
 
 			// Verify if already CAPTURED
 			// v1.5 // $payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "message` WHERE id_order='" . $orderLoaded->id . "' AND message LIKE 'HiPay%Status : 118%'";
-			$payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "message` WHERE id_order='" . $orderLoaded->id . "' AND ( message LIKE '%Status: 118%' OR message LIKE '%Status : 118%' ) ";
+			$payment_message_sql = "SELECT * FROM `" . _DB_PREFIX_ . "message` WHERE id_order='" . (int)$orderLoaded->id . "' AND ( message LIKE '%Status: 118%' OR message LIKE '%Status : 118%' ) ";
 			$paymentmessage = Db::getInstance()->executeS($payment_message_sql);
 
 			if (empty($paymentmessage))

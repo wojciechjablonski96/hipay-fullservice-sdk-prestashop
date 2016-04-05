@@ -38,7 +38,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.2.0';
+		$this->version = '1.3.0';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
@@ -2037,7 +2037,7 @@ class HiPay_Tpp extends PaymentModule {
 		// refonte du calcul du montant restant à rembourser...
 		$sum = 0.0;
 		$sum_refund = 0.0;
-		$sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE order_reference='" . $order_reference . "';";
+		$sql = "SELECT * FROM `" . _DB_PREFIX_ . "order_payment` WHERE order_reference='" . pSQL($order_reference) . "';";
 		if ($results = Db::getInstance()->ExecuteS($sql)){
 			foreach ($results as $row){
 				if($row['payment_method'] == 'HiPay - refund'){
