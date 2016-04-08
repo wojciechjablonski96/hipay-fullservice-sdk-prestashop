@@ -25,7 +25,7 @@ Download the ZIP package available in the "_package-ready-for-prestashop_" folde
 - 3-D Secure enabling/disabling
 - One-Click option configuration with custom rules
 - Management of multiple cards per customer for one-click payment 
-- iFrame integration, hosted page and custom card API
+- iFrame integration, hosted page and API custom card
 - Mail management for transactions pending fraud validation (challenged)
 - Manual and automatic capture
 - Capture and partial refund
