@@ -36,7 +36,7 @@ Download the ZIP package available in the "_package-ready-for-prestashop_" folde
 
 The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
 
-[doc-home]: https://github.com/hipay/hipay-fullservice-sdk-prestashop/wiki
+[doc-home]: https://developer.hipay.com/doc/hipay-fullservice-sdk-prestashop/
 
 [hipay-help]: http://help.hipay.com
 
