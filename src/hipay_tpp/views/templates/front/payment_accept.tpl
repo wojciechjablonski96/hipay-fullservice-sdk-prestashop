@@ -51,17 +51,6 @@
 
 {if $id_order == '' && $transaction == 0}
 
-	{literal}
-		<script>
-			window.onload = function() {
-				if (!window.location.hash) {
-					window.location = window.location + '#loaded';
-					window.location.reload();
-				}
-			}
-		</script>
-	{/literal}
-
 	<div class="hipay-fullwidth ">
 		<div class="hipay-clearfix ">
 			<img src="{$base_dir_ssl}modules/hipay_tpp/views/img/hipay-fullservice_450x96.png" title="HiPay Fullservice" alt="HiPay Fullservice" />
@@ -103,15 +92,35 @@
 		  }
 		}
 	</style>
+	{literal}
+		<script type="text/javascript">
+			function sleep(milliseconds) {
+				var start = new Date().getTime();
+					for (var i = 0; i < 1e7; i++) {
+						if ((new Date().getTime() - start) > milliseconds){
+						break;
+					}
+				}
+			}
+			window.onload = function() {
+				if (!window.location.hash) {
+					window.location = window.location + '#loaded';
+					sleep(5000);
+					window.location.reload();
+				}
+			}
+		</script>
+	{/literal}
 {else}
 	<p>{l s='Your order has been taken into account.' mod='hipay_tpp'}
 	    <br /><br />{l s='It will be available in a few moments in your' mod='hipay_tpp'} <strong><a href="{$link->getPageLink('history', true)}">{l s='order history' mod='hipay_tpp'}</a></strong>
 	</p>
 	<p><a href="index.php">{l s='Back to home' mod='hipay_tpp'}</a></p>
+	{*
+	 *
+	 * HERE CODE FOR TAG ANALYTICS
+	 *
+	 *}
 {/if}
 
-{*
- *
- * HERE CODE FOR TAG ANALYTICS
- *
- *}
+
