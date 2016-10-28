@@ -440,12 +440,12 @@ class HiPay_TppValidationModuleFrontController extends ModuleFrontController {
 
 			// init context
 			Context::getContext()->cart = new Cart((int) $cart->id);       
-	        $address = new Address((int) Context::getContext()->cart->id_address_invoice);
-	        Context::getContext()->country = new Country((int) $address->id_country);
-        	Context::getContext()->customer = new Customer((int) Context::getContext()->cart->id_customer);
-       		Context::getContext()->language = new Language((int) Context::getContext()->cart->id_lang);
-	        Context::getContext()->currency = new Currency((int) Context::getContext()->cart->id_currency);
-	        $customer 	= new Customer((int) Context::getContext()->cart->id_customer);
+			$address = new Address((int) Context::getContext()->cart->id_address_invoice);
+			Context::getContext()->country = new Country((int) $address->id_country);
+			Context::getContext()->customer = new Customer((int) Context::getContext()->cart->id_customer);
+			Context::getContext()->language = new Language((int) Context::getContext()->cart->id_lang);
+			Context::getContext()->currency = new Currency((int) Context::getContext()->cart->id_currency);
+			$customer 	= new Customer((int) Context::getContext()->cart->id_customer);
 			$shop_id = Context::getContext()->shop->id;
 			$shop = new Shop($shop_id);
 			Shop::setContext(Shop::CONTEXT_SHOP,$cart->id_shop);
