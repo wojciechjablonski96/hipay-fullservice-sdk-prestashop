@@ -449,22 +449,35 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 			);
 		// création de la commande sur le statut authorized
 		// car pas de commande
-		$tmpshop = new Shop((int)$cart->id_shop);
+
+		// init context
+		Context::getContext()->cart 	= new Cart((int) $cart->id);       
+		$address 						= new Address((int) Context::getContext()->cart->id_address_invoice);
+		Context::getContext()->country 	= new Country((int) $address->id_country);
+		Context::getContext()->customer = new Customer((int) Context::getContext()->cart->id_customer);
+		Context::getContext()->language = new Language((int) Context::getContext()->cart->id_lang);
+		Context::getContext()->currency = new Currency((int) Context::getContext()->cart->id_currency);
+		$customer 						= new Customer((int) Context::getContext()->cart->id_customer);
+		$shop_id 						= Context::getContext()->shop->id;
+		$shop 							= new Shop($shop_id);
+		// forced shop
+		Shop::setContext(Shop::CONTEXT_SHOP,$cart->id_shop);
+
 		//LOG
 		HipayLog('--------------- SHOP Id = '.$cart->id_shop);
 		HipayLog('--------------- Début validateOrder ');
 		try{
 			$hipay->validateOrder(
-				$cart->id, 
+				Context::getContext()->cart->id, 
 				$statut, 
 				(float)$callback_arr['authorized_amount'], 
 				$hipay->displayName . ' via ' . ucfirst($callback_arr['payment_product']), 
 				$message, 
 				$orderPayment, 
-				NULL, 
+				Context::getContext()->cart->id_currency, 
 				false, 
-				$cart->secure_key,
-				$tmpshop
+				$customer->secure_key,
+		  		$shop
 			);
 		}catch(Exception $e){
 			// on catch mais on continue le traitement
