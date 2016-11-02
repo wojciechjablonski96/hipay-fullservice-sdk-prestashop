@@ -1,3 +1,9 @@
+# Version 1.3.3
+Fix - error context shop and replace by cart->id_shop in validation.php
+
+# Version 1.3.2
+Fix - preload context shop in calback Validation
+
 # Version 1.3.1
 Update documentation URL to the HiPay portal developer
 
