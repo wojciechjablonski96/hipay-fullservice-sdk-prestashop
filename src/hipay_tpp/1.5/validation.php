@@ -458,7 +458,7 @@ function createOrderByHipay($order_exist,$callback_arr, $hipay, $cart, $statut, 
 		Context::getContext()->language = new Language((int) Context::getContext()->cart->id_lang);
 		Context::getContext()->currency = new Currency((int) Context::getContext()->cart->id_currency);
 		$customer 						= new Customer((int) Context::getContext()->cart->id_customer);
-		$shop_id 						= Context::getContext()->shop->id;
+		$shop_id 						= $cart->id_shop;
 		$shop 							= new Shop($shop_id);
 		// forced shop
 		Shop::setContext(Shop::CONTEXT_SHOP,$cart->id_shop);
