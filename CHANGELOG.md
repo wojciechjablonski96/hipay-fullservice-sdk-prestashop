@@ -1,3 +1,6 @@
+# Version 1.3.4
+Add new ZIP package version
+
 # Version 1.3.3
 Fix - error context shop and replace by cart->id_shop in validation.php
 
