@@ -249,17 +249,17 @@
 
     {literal}
 	<script>
-		$(document).ready(function() {
+        $(document).ready(function() {
             $('#hipay_payment').on('click', function(){
-				$('#hipay_payment').hide();
-				$('#hipay-loading').show();
-				submitHiPay(this);
-			});
+			    $('#hipay_payment').hide();
+			    $('#hipay-loading').show();
+			    submitHiPay(this);
+            });
         });
 
-		function submitHiPay(obj){
-			$(obj).closest('form').submit();
-		}
+        function submitHiPay(obj){
+            $(obj).closest('form').submit();
+        }
 	</script>
     {/literal}
 {/if}
