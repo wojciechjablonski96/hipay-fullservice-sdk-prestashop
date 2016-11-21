@@ -82,10 +82,11 @@
 									<label class="control-label" for="cartUseExistingTokenZero" style="margin: 0 0 0 5px; font-size: 15px;">{l s='Memorize card' mod='hipay_tpp'}</label>
 									<br />
 									<span class="cart_navigation">
-										<a class="exclusive" title="{l s='Pay' mod='hipay_tpp'}" href="javascript:void(0);" onclick="{literal}$(this).closest('form').submit();{/literal}">
+										<a class="exclusive" title="{l s='Pay' mod='hipay_tpp'}" href="javascript:void(0);"  id="payHiPay">
 											{l s='Pay' mod='hipay_tpp'} »
 										</a>
 									</span>
+									<div id="hipay-loading" style="display:none;"><img src="{$modules_dir}hipay_tpp/img/loading_transparent.gif" /></div>
 								</form>
 							</span>
 							<br />
@@ -115,10 +116,11 @@
                 						</span>
                 						<br />
 							            <span class="cart_navigation">
-							                <a class="exclusive" title="{l s='Pay' mod='hipay_tpp'}" href="javascript:void(0);" onclick="{literal}$(this).closest('form').submit();{/literal}">
+							                <a class="exclusive" title="{l s='Pay' mod='hipay_tpp'}" href="javascript:void(0);" id="payHiPay" >
 											{l s='Pay' mod='hipay_tpp'} »
 							                </a>
 							            </span>
+										<div id="hipay-loading" style="display:none;"><img src="{$modules_dir}hipay_tpp/img/loading_transparent.gif" /></div>
         							</form>
         						</span>
    								<br />
@@ -208,6 +210,17 @@
 					$('.enter_card').show('fast');
 				}
 			});
+			
+			$('#payHiPay').on('click', function(){
+				$('span.cart_navigation').hide();
+				$('#hipay-loading').show();
+				submitHiPay(this);
+			});
+		
 		});
+
+		function submitHiPay(obj){
+			$(obj).closest('form').submit();
+		}
 	</script>
 {/literal}

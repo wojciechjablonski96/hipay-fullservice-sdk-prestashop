@@ -241,8 +241,25 @@
     </div>
 
     <div style="margin: 15px 0 30px 180px;"> 
-            <input id="hipay_payment" class="exclusive standard-checkout" type="submit" value="{l s='Send' mod='hipay_tpp'} &raquo;" />
+            <input id="hipay_payment" class="exclusive standard-checkout" type="button" value="{l s='Send' mod='hipay_tpp'} &raquo;" />
+            <div id="hipay-loading" style="display:none;"><img src="{$modules_dir}hipay_tpp/img/loading_transparent.gif" /></div>
     </div>
 
     </form>
+
+    {literal}
+	<script>
+        $(document).ready(function() {
+            $('#hipay_payment').on('click', function(){
+			    $('#hipay_payment').hide();
+			    $('#hipay-loading').show();
+			    submitHiPay(this);
+            });
+        });
+
+        function submitHiPay(obj){
+            $(obj).closest('form').submit();
+        }
+	</script>
+    {/literal}
 {/if}
