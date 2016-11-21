@@ -1,3 +1,6 @@
+# Version 1.3.6
+Fix oneclick payment button with a loading 
+
 # Version 1.3.5
 # Version 1.3.4
 Add new ZIP package version
