@@ -1,10 +1,12 @@
-web:
+prestashop:
+  container_name: jira-tpp-1619.hipay-pos-platform.com
   build: .
-  container_name: hipay-tpp-prestashop
   ports:
-    - "8085:80"
+    - "8202:80"
+  links:
+    - smtp
   environment:
-    PS_DOMAIN: localhost
+    PS_DOMAIN: jira-tpp-1619.hipay-pos-platform.com
     ADMIN_MAIL: demo@hipay.com
     ADMIN_PASSWD: hipay123
     PS_LANGUAGE: en
@@ -13,3 +15,10 @@ web:
     PS_DEV_MODE: 1
     PS_FOLDER_ADMIN: admin-hipay
     PS_FOLDER_INSTALL: installOLD
+  volumes:
+    - .:/var/www/html
+smtp:
+  image: schickling/mailcatcher
+  container_name: smtp-hipay-enterprise-ps1619
+  ports:
+    - "1102:1080"
