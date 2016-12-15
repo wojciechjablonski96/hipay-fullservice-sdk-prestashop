@@ -72,11 +72,11 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 			$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. (int)$cart_id .' FOR UPDATE;';
 			
 			$hipay = new HiPay_Tpp();
-			$customer = new Customer((int)$objCart->cart->id_customer);
-			$shop_id 						= $cart->id_shop;
-			$shop 							= new Shop($shop_id);
+			$customer = new Customer((int)$objCart->id_customer);
+			$shop_id = $objCart->id_shop;
+			$shop = new Shop($shop_id);
 			// forced shop
-			Shop::setContext(Shop::CONTEXT_SHOP,$cart->id_shop);
+			Shop::setContext(Shop::CONTEXT_SHOP,$objCart->id_shop);
 			$hipay->validateOrder(
 				(int)$cart_id, 
 				Configuration::get('HIPAY_PENDING'), 
