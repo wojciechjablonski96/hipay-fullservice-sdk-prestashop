@@ -93,6 +93,8 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 			if (!Db::getInstance()->execute($sql)){
 				HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR, 'Bad LockSQL end, Lock could not be end for id_cart = ' . $id_cart);
 			}
+			// get order id
+			$order_id = $hipay->currentOrder;
 		}
         $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : 0;
     	$context->smarty->assign(array(
