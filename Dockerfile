@@ -1,6 +1,11 @@
-FROM prestashop/prestashop:1.6.1.4
+FROM prestashop/prestashop:1.6.1.9
 
-MAINTAINER Johan PROTIN <jprotin@hipay.com>
+MAINTAINER support.wallet <support.wallet@hipay.com>
+
+RUN apt-get update \
+        && apt-get install -y ssmtp \
+                && echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendmail.ini \
+                        && echo "mailhub=smtp:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
 COPY conf /tmp
 COPY src /var/www/html/modules
