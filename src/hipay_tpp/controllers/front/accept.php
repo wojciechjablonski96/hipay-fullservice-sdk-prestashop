@@ -56,6 +56,15 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
     		// load cart
     		$objCart = new Cart((int)$cart_id);
     	}
+		// LOCK SQL
+		#################################################################
+		$sql = 'begin;';
+		$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. (int)$cart_id .' FOR UPDATE;';
+		if (!Db::getInstance()->execute($sql)){
+			HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR, 'Bad LockSQL initiated, Lock could not be initiated for id_cart = ' . $id_cart);
+			die('Lock not initiated');
+		}
+
     	// load order for id_order 
     	$order_id = Order::getOrderByCartId($cart_id);
     	if($order_id && !empty($order_id) && $order_id > 0 ){
@@ -66,11 +75,6 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 					WHERE o.id_order = '.$order_id;
 	        $result = Db::getInstance()->getRow($sql);
 	    } else {
-			// LOCK SQL
-			#################################################################
-			$sql = 'begin;';
-			$sql .= 'SELECT id_cart FROM '._DB_PREFIX_.'cart WHERE id_cart = '. (int)$cart_id .' FOR UPDATE;';
-			
 			$hipay = new HiPay_Tpp();
 			$customer = new Customer((int)$objCart->id_customer);
 			$shop_id = $objCart->id_shop;
@@ -89,12 +93,13 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 				$customer->secure_key,
 		  		$shop
 			);
-			$sql = 'commit;';
-			if (!Db::getInstance()->execute($sql)){
-				HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR, 'Bad LockSQL end, Lock could not be end for id_cart = ' . $id_cart);
-			}
 			// get order id
 			$order_id = $hipay->currentOrder;
+		}
+		// commit lock SQL
+		$sql = 'commit;';
+		if (!Db::getInstance()->execute($sql)) {
+			HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR, 'Bad LockSQL end, Lock could not be end for id_cart = ' . $id_cart);
 		}
         $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : 0;
     	$context->smarty->assign(array(
