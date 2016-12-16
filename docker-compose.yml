@@ -15,8 +15,6 @@ prestashop:
     PS_DEV_MODE: 1
     PS_FOLDER_ADMIN: admin-hipay
     PS_FOLDER_INSTALL: installOLD
-  volumes:
-    - .:/var/www/html
 smtp:
   image: schickling/mailcatcher
   container_name: smtp-hipay-enterprise-ps1619
