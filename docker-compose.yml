@@ -6,7 +6,7 @@ prestashop:
   links:
     - smtp
   environment:
-    PS_DOMAIN: jira-tpp-1619.hipay-pos-platform.com
+    PS_DOMAIN: localhost
     ADMIN_MAIL: demo@hipay.com
     ADMIN_PASSWD: hipay123
     PS_LANGUAGE: en
