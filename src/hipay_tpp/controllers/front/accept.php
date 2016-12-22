@@ -41,7 +41,7 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
     	$context 		= Context::getContext();
         $hipay = new HiPay_Tpp();
     	// --------------------------------------------------------------------------
-    	// vérification si les informations ne sont pas = àgit status FALSE
+    	// vérification si les informations ne sont pas = à FALSE
     	if(!$cart_id){
     		// récupération du dernier panier via son compte client
     		$sql = 'SELECT `id_cart`
