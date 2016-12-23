@@ -34,9 +34,13 @@ class HiPay_TppDeclineModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-            // Disconnect User from cart
-            HipayClass::unsetCart();
-            
-		$this->setTemplate ( 'payment_decline.tpl' );
+        $cart_id = Context::getContext()->cookie->id_cart;
+
+        // Disconnect User from cart
+        HipayClass::unsetCart();
+
+        Hook::exec('displayHiPayDeclined', ['cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)]);
+
+        $this->setTemplate ( 'payment_decline.tpl' );
 	}
 }

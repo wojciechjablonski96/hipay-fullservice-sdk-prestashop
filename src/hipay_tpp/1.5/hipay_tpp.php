@@ -2069,12 +2069,17 @@ class HiPay_Tpp extends PaymentModule {
 
     private function addHooks()
     {
-        return Db::getInstance()->execute('INSERT IGNORE INTO `'._DB_PREFIX_.'hook` (`name`, `title`, `description`, `position`) VALUES (\'displayHiPayAccepted\', \'After HiPay accepted\', \'Called just before rendering accept page.\', 1)');
+        return Db::getInstance()->execute('INSERT IGNORE INTO `'._DB_PREFIX_.'hook` (`name`, `title`, `description`, `position`)'
+            .' VALUES (\'displayHiPayAccepted\', \'After HiPay accepted\', \'Called just before rendering accept page.\', 1)'
+            .', (\'displayHiPayCanceled\', \'After HiPay canceled\', \'Called just before rendering cancel page.\', 1)'
+            .', (\'displayHiPayDeclined\', \'After HiPay declined\', \'Called just before rendering decline page.\', 1)'
+            .', (\'displayHiPayException\', \'After HiPay payment exception\', \'Called just before rendering exception page.\', 1)'
+            .', (\'displayHiPayPending\', \'After HiPay pending\', \'Called just before rendering pending page.\', 1)');
     }
 
     private function removesHooks()
     {
-        return Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'hook` WHERE `name` = \'displayHiPayAccepted\'');
+        return Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'hook` WHERE `name` IN (\'displayHiPayAccepted\', \'displayHiPayCanceled\', \'displayHiPayDeclined\', \'displayHiPayException\', \'displayHiPayPending\')');
     }
 
 }
