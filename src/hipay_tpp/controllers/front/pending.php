@@ -34,11 +34,13 @@ class HiPay_TppPendingModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
+        $cart_id = Context::getContext()->cookie->id_cart;
+
         // Disconnect User from cart
         HipayClass::unsetCart();
 
-        
-            
+        Hook::exec('displayHiPayPending', array('cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)));
+
 		$this->setTemplate ( 'payment_pending.tpl' );
 	}
 }

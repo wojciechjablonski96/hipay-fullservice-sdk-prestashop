@@ -34,9 +34,13 @@ class HiPay_TppCancelModuleFrontController extends ModuleFrontController {
 	 * @see FrontController::postProcess()
 	 */
 	public function postProcess() {
-            // Disconnect User from cart
-            HipayClass::unsetCart();
-            
-		$this->setTemplate ( 'payment_cancel.tpl' );
+        $cart_id = Context::getContext()->cookie->id_cart;
+
+        // Disconnect User from cart
+        HipayClass::unsetCart();
+
+        Hook::exec('displayHiPayCanceled', array('cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)));
+		
+        $this->setTemplate ( 'payment_cancel.tpl' );
 	}
 }
