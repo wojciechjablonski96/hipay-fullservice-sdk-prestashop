@@ -39,7 +39,7 @@ class HiPay_TppExceptionModuleFrontController extends ModuleFrontController {
         // Disconnect User from cart
         HipayClass::unsetCart();
 
-        Hook::exec('displayHiPayException', ['cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)]);
+        Hook::exec('displayHiPayException', array('cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)));
 
         $this->setTemplate ( 'payment_exception.tpl' );
 	}

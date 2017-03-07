@@ -109,7 +109,7 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
             'currency' 		=> $context->currency->iso_code,
             'email'			=> $context->customer->email
         ));
-        Hook::exec('displayHiPayAccepted', ['cart' => $objCart, "order_id" => $order_id]);
+        Hook::exec('displayHiPayAccepted', array('cart' => $objCart, "order_id" => $order_id));
         $this->setTemplate ( 'payment_accept.tpl' );
 	}
 }

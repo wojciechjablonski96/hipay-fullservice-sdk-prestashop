@@ -39,7 +39,7 @@ class HiPay_TppPendingModuleFrontController extends ModuleFrontController {
         // Disconnect User from cart
         HipayClass::unsetCart();
 
-        Hook::exec('displayHiPayPending', ['cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)]);
+        Hook::exec('displayHiPayPending', array('cart_id' => $cart_id, 'order_id' => Order::getOrderByCartId($cart_id)));
 
 		$this->setTemplate ( 'payment_pending.tpl' );
 	}
