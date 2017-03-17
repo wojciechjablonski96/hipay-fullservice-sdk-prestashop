@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b1454978-3b4a-40cb-8774-94d9d852c079" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-ready-for-prestashop/hipay_tpp_1-3-x.zip" afterPath="$PROJECT_DIR$/package-ready-for-prestashop/hipay_tpp_1-3-x.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hipay_tpp/1.4/hipay_tpp.php" afterPath="$PROJECT_DIR$/src/hipay_tpp/1.4/hipay_tpp.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hipay_tpp/config.xml" afterPath="$PROJECT_DIR$/src/hipay_tpp/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hipay_tpp/config_fr.xml" afterPath="$PROJECT_DIR$/src/hipay_tpp/config_fr.xml" />
+    </list>
+    <ignored path="hipay_tpp.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="hipay_tpp" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="validation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="598" column="45" selection-start-line="598" selection-start-column="45" selection-end-line="598" selection-end-column="45" />
+              <folding>
+                <marker date="1489773298531" expanded="true" signature="3848:3934" ph="SELECT id_ca... ${_DB_PREFIX_}" />
+                <marker date="1489773298531" expanded="true" signature="6605:6678" ph="SELECT `id_o... ${_DB_PREFIX_}orders" />
+                <marker date="1489773298531" expanded="true" signature="19531:20185" ph="INSERT INTO `${_DB_PREFIX_}hipay_transactions`... " />
+                <marker date="1489773298531" expanded="true" signature="21301:21481" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_tokens" />
+                <marker date="1489773298531" expanded="true" signature="21742:22180" ph="INSERT INTO `${_DB_PREFIX_}hipay_tokens`... " />
+                <marker date="1489773298531" expanded="true" signature="30166:30342" ph="DELETE FROM " />
+                <marker date="1489773298531" expanded="true" signature="30565:30698" ph="SELECT `id_o... ${_DB_PREFIX_}order_payment" />
+                <marker date="1489773298531" expanded="true" signature="33460:33600" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
+                <marker date="1489773298531" expanded="true" signature="39364:39507" ph="SELECT COUNT... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/config.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CHANGELOG.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="30">
+                <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config_fr.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/config_fr.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hipay_tpp.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.4/hipay_tpp.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <folding>
+                <marker date="1489773352847" expanded="true" signature="27926:30581" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="27977:30554" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="28105:28285" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="28289:28469" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="28540:28720" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="28795:28975" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="29003:29100" ph="//..." />
+                <marker date="1489773352847" expanded="true" signature="29456:29640" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="29644:29828" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="29896:30474" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="30052:30248" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="30252:30448" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="44081:44158" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="44369:44381" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="44430:44448" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="44494:44512" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="44791:44809" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="45084:45102" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="47641:47743" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="47955:47967" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="48074:48092" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="48367:48385" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="50502:50610" ph="SELECT id, n... " />
+                <marker date="1489773352847" expanded="true" signature="50700:51455" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="50739:51455" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="50896:51455" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="50932:51411" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="50973:51374" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="51880:52235" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="60774:60945" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="60791:60879" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="60887:60928" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="61319:61422" ph="SELECT COUNT... ${_DB_PREFIX_}hipay_cart_sent" />
+                <marker date="1489773352847" expanded="true" signature="61477:61603" ph="INSERT INTO `${_DB_PREFIX_}hipay_cart_sent`... " />
+                <marker date="1489773352847" expanded="true" signature="62466:62560" ph="INSERT INTO `${_DB_PREFIX_}hipay_tokens_tmp`... " />
+                <marker date="1489773352847" expanded="true" signature="77955:78174" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="77980:78084" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="78092:78149" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="81179:81280" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+                <marker date="1489773352847" expanded="true" signature="86399:86500" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+                <marker date="1489773352847" expanded="true" signature="96867:96954" ph="SELECT payme... ${_DB_PREFIX_}orders" />
+                <marker date="1489773352847" expanded="true" signature="98093:98252" ph="SELECT * FRO... ${_DB_PREFIX_}message" />
+                <marker date="1489773352847" expanded="true" signature="100015:100174" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="100096:100102" ph=" " />
+                <marker date="1489773352847" expanded="false" signature="100102:100108" ph=" " />
+                <marker date="1489773352847" expanded="false" signature="100231:100242" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="100267:100290" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="100351:100357" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="100357:100363" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="100557:100707" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="100578:100610" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="100766:100914" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="100787:100819" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101019:101087" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101247:101539" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101265:101355" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101373:101518" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101569:101585" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101586:101708" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101801:104118" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="101878:104050" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="101972:104041" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="102203:103553" ph="/*...*/" />
+                <marker date="1489773352847" expanded="true" signature="103680:103800" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="103804:103923" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="104705:104711" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="105949:105963" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="106059:106073" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="106185:106198" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="106294:106307" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="106426:106432" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="108577:108737" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="108658:108664" ph=" " />
+                <marker date="1489773352847" expanded="false" signature="108664:108670" ph=" " />
+                <marker date="1489773352847" expanded="false" signature="108794:108805" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="108830:108853" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="108914:108920" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="108920:108926" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="109147:109297" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="109168:109200" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="109358:109499" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="109379:109411" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="109784:109795" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="109826:109896" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="110747:111066" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="110761:110850" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="110854:111050" ph="..." />
+                <marker date="1489773352847" expanded="false" signature="111078:111084" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="111285:111999" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="111329:111564" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="111608:111951" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="112030:112046" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="112047:112171" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="113156:115448" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="113233:115380" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="113328:115371" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="113560:114883" ph="/*...*/" />
+                <marker date="1489773352847" expanded="true" signature="115010:115130" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="115134:115253" ph="{...}" />
+                <marker date="1489773352847" expanded="true" signature="116056:116062" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="117335:117349" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="117603:117616" ph="..." />
+                <marker date="1489773352847" expanded="true" signature="117877:117883" ph=" " />
+                <marker date="1489773352847" expanded="true" signature="119542:119676" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_callbacks" />
+                <marker date="1489773352847" expanded="true" signature="119762:119846" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_callbacks" />
+                <marker date="1489773352847" expanded="true" signature="120197:120298" ph="SELECT `trea... ${_DB_PREFIX_}hipay_callbacks" />
+                <marker date="1489773352847" expanded="true" signature="121275:121353" ph="DELETE FROM " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accept.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/controllers/front/accept.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="552">
+              <caret line="114" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+              <folding>
+                <marker date="1489773298531" expanded="true" signature="1609:1740" ph="SELECT `id_c... ${_DB_PREFIX_}cart" />
+                <marker date="1489773298531" expanded="true" signature="2125:2211" ph="SELECT id_ca... ${_DB_PREFIX_}" />
+                <marker date="1489773298531" expanded="true" signature="2657:2838" ph="SELECT DISTI... ${_DB_PREFIX_}order_payment" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hipay_tpp.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/hipay_tpp.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="407">
+              <caret line="1789" column="39" selection-start-line="1789" selection-start-column="39" selection-end-line="1789" selection-end-column="39" />
+              <folding>
+                <marker date="1489773298531" expanded="true" signature="29892:29969" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="30137:30149" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="30198:30216" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="30262:30280" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="30551:30569" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="30844:30862" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="33143:33245" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="33414:33426" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="33525:33543" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="33810:33828" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="35988:36096" ph="SELECT id, n... " />
+                <marker date="1489773298531" expanded="true" signature="36168:36615" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="36201:36615" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="36321:36615" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="36337:36602" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="36351:36585" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="37013:37228" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="55947:56064" ph="SELECT payme... ${_DB_PREFIX_}order_payment" />
+                <marker date="1489773298531" expanded="true" signature="57044:57167" ph="SELECT * FRO... ${_DB_PREFIX_}message" />
+                <marker date="1489773298531" expanded="true" signature="58530:58689" ph="..." />
+                <marker date="1489773298531" expanded="false" signature="58611:58617" ph=" " />
+                <marker date="1489773298531" expanded="false" signature="58617:58623" ph=" " />
+                <marker date="1489773298531" expanded="false" signature="58746:58757" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="58782:58805" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="58866:58872" ph=" " />
+                <marker date="1489773298531" expanded="true" signature="58872:58878" ph=" " />
+                <marker date="1489773298531" expanded="true" signature="59072:59222" ph="..." />
+                <marker date="1489773298531" expanded="false" signature="59093:59125" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="59334:59394" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="59350:59379" ph="{...}" />
+                <marker date="1489773298531" expanded="true" signature="59447:59595" ph="..." />
+                <marker date="1489773298531" expanded="false" signature="59468:59500" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="59700:59768" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="59928:60220" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="59946:60036" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="60054:60199" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="60250:60266" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="60267:60389" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="60482:60484" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="73428:73460" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="74068:74074" ph=" " />
+                <marker date="1489773298531" expanded="true" signature="75347:75361" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="75615:75628" ph="..." />
+                <marker date="1489773298531" expanded="true" signature="75889:75895" ph=" " />
+                <marker date="1489773298531" expanded="true" signature="77842:77945" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
+                <marker date="1489773298531" expanded="true" signature="79609:79789" ph="DELETE FROM " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="refund.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/controllers/front/refund.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="173" column="19" selection-start-line="173" selection-start-column="12" selection-end-line="173" selection-end-column="19" />
+              <folding>
+                <marker date="1477642329995" expanded="true" signature="7439:7542" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HipayAPI.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/classes/HipayAPI.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="232" column="40" selection-start-line="232" selection-start-column="40" selection-end-line="232" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/hipay_tpp/1.5/hipay_tpp.php" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/controllers/front/refund.php" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/controllers/front/accept.php" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/1.4/hipay_tpp.php" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/config_fr.xml" />
+        <option value="$PROJECT_DIR$/src/hipay_tpp/config.xml" />
+        <option value="$PROJECT_DIR$/CHANGELOG.md" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="27" />
+    <option name="width" value="1600" />
+    <option name="height" value="873" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hipay_tpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hipay_tpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hipay_tpp" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hipay_tpp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hipay_tpp" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1454978-3b4a-40cb-8774-94d9d852c079" name="Default" comment="" />
+      <created>1489739498212</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1489739498212</updated>
+      <workItem from="1489739499445" duration="16210000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="16210000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="27" width="1600" height="873" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24967742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/classes/HipayClass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1477642329991" expanded="true" signature="1833:1957" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="2026:2158" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="2222:2349" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="2970:3094" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="3163:3295" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="3359:3486" ph="SELECT `valu... ${_DB_PREFIX_}configuration" />
+            <marker date="1477642329991" expanded="true" signature="4995:5205" ph="SELECT c.iso... ${_DB_PREFIX_}country" />
+            <marker date="1477642329991" expanded="true" signature="9358:9440" ph="SELECT value... ${_DB_PREFIX_}configuration" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/classes/HipayAPI.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="232" column="40" selection-start-line="232" selection-start-column="40" selection-end-line="232" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/hipay_tpp.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="1789" column="39" selection-start-line="1789" selection-start-column="39" selection-end-line="1789" selection-end-column="39" />
+          <folding>
+            <marker date="1489773298531" expanded="true" signature="29892:29969" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="30137:30149" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="30198:30216" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="30262:30280" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="30551:30569" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="30844:30862" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="33143:33245" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="33414:33426" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="33525:33543" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="33810:33828" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="35988:36096" ph="SELECT id, n... " />
+            <marker date="1489773298531" expanded="true" signature="36168:36615" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="36201:36615" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="36321:36615" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="36337:36602" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="36351:36585" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="37013:37228" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="55947:56064" ph="SELECT payme... ${_DB_PREFIX_}order_payment" />
+            <marker date="1489773298531" expanded="true" signature="57044:57167" ph="SELECT * FRO... ${_DB_PREFIX_}message" />
+            <marker date="1489773298531" expanded="true" signature="58530:58689" ph="..." />
+            <marker date="1489773298531" expanded="false" signature="58611:58617" ph=" " />
+            <marker date="1489773298531" expanded="false" signature="58617:58623" ph=" " />
+            <marker date="1489773298531" expanded="false" signature="58746:58757" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="58782:58805" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="58866:58872" ph=" " />
+            <marker date="1489773298531" expanded="true" signature="58872:58878" ph=" " />
+            <marker date="1489773298531" expanded="true" signature="59072:59222" ph="..." />
+            <marker date="1489773298531" expanded="false" signature="59093:59125" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="59334:59394" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="59350:59379" ph="{...}" />
+            <marker date="1489773298531" expanded="true" signature="59447:59595" ph="..." />
+            <marker date="1489773298531" expanded="false" signature="59468:59500" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="59700:59768" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="59928:60220" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="59946:60036" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="60054:60199" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="60250:60266" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="60267:60389" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="60482:60484" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="73428:73460" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="74068:74074" ph=" " />
+            <marker date="1489773298531" expanded="true" signature="75347:75361" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="75615:75628" ph="..." />
+            <marker date="1489773298531" expanded="true" signature="75889:75895" ph=" " />
+            <marker date="1489773298531" expanded="true" signature="77842:77945" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
+            <marker date="1489773298531" expanded="true" signature="79609:79789" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/controllers/front/refund.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="173" column="19" selection-start-line="173" selection-start-column="12" selection-end-line="173" selection-end-column="19" />
+          <folding>
+            <marker date="1477642329995" expanded="true" signature="7439:7542" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/controllers/front/accept.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="114" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding>
+            <marker date="1489773298531" expanded="true" signature="1609:1740" ph="SELECT `id_c... ${_DB_PREFIX_}cart" />
+            <marker date="1489773298531" expanded="true" signature="2125:2211" ph="SELECT id_ca... ${_DB_PREFIX_}" />
+            <marker date="1489773298531" expanded="true" signature="2657:2838" ph="SELECT DISTI... ${_DB_PREFIX_}order_payment" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="598" column="45" selection-start-line="598" selection-start-column="45" selection-end-line="598" selection-end-column="45" />
+          <folding>
+            <marker date="1489773298531" expanded="true" signature="3848:3934" ph="SELECT id_ca... ${_DB_PREFIX_}" />
+            <marker date="1489773298531" expanded="true" signature="6605:6678" ph="SELECT `id_o... ${_DB_PREFIX_}orders" />
+            <marker date="1489773298531" expanded="true" signature="19531:20185" ph="INSERT INTO `${_DB_PREFIX_}hipay_transactions`... " />
+            <marker date="1489773298531" expanded="true" signature="21301:21481" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_tokens" />
+            <marker date="1489773298531" expanded="true" signature="21742:22180" ph="INSERT INTO `${_DB_PREFIX_}hipay_tokens`... " />
+            <marker date="1489773298531" expanded="true" signature="30166:30342" ph="DELETE FROM " />
+            <marker date="1489773298531" expanded="true" signature="30565:30698" ph="SELECT `id_o... ${_DB_PREFIX_}order_payment" />
+            <marker date="1489773298531" expanded="true" signature="33460:33600" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
+            <marker date="1489773298531" expanded="true" signature="39364:39507" ph="SELECT COUNT... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.4/hipay_tpp.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding>
+            <marker date="1489773352847" expanded="true" signature="27926:30581" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="27977:30554" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="28105:28285" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="28289:28469" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="28540:28720" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="28795:28975" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="29003:29100" ph="//..." />
+            <marker date="1489773352847" expanded="true" signature="29456:29640" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="29644:29828" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="29896:30474" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="30052:30248" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="30252:30448" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="44081:44158" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="44369:44381" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="44430:44448" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="44494:44512" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="44791:44809" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="45084:45102" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="47641:47743" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="47955:47967" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="48074:48092" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="48367:48385" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="50502:50610" ph="SELECT id, n... " />
+            <marker date="1489773352847" expanded="true" signature="50700:51455" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="50739:51455" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="50896:51455" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="50932:51411" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="50973:51374" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="51880:52235" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="60774:60945" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="60791:60879" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="60887:60928" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="61319:61422" ph="SELECT COUNT... ${_DB_PREFIX_}hipay_cart_sent" />
+            <marker date="1489773352847" expanded="true" signature="61477:61603" ph="INSERT INTO `${_DB_PREFIX_}hipay_cart_sent`... " />
+            <marker date="1489773352847" expanded="true" signature="62466:62560" ph="INSERT INTO `${_DB_PREFIX_}hipay_tokens_tmp`... " />
+            <marker date="1489773352847" expanded="true" signature="77955:78174" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="77980:78084" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="78092:78149" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="81179:81280" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+            <marker date="1489773352847" expanded="true" signature="86399:86500" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_transactions" />
+            <marker date="1489773352847" expanded="true" signature="96867:96954" ph="SELECT payme... ${_DB_PREFIX_}orders" />
+            <marker date="1489773352847" expanded="true" signature="98093:98252" ph="SELECT * FRO... ${_DB_PREFIX_}message" />
+            <marker date="1489773352847" expanded="true" signature="100015:100174" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="100096:100102" ph=" " />
+            <marker date="1489773352847" expanded="false" signature="100102:100108" ph=" " />
+            <marker date="1489773352847" expanded="false" signature="100231:100242" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="100267:100290" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="100351:100357" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="100357:100363" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="100557:100707" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="100578:100610" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="100766:100914" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="100787:100819" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101019:101087" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101247:101539" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101265:101355" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101373:101518" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101569:101585" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101586:101708" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101801:104118" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="101878:104050" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="101972:104041" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="102203:103553" ph="/*...*/" />
+            <marker date="1489773352847" expanded="true" signature="103680:103800" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="103804:103923" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="104705:104711" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="105949:105963" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="106059:106073" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="106185:106198" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="106294:106307" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="106426:106432" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="108577:108737" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="108658:108664" ph=" " />
+            <marker date="1489773352847" expanded="false" signature="108664:108670" ph=" " />
+            <marker date="1489773352847" expanded="false" signature="108794:108805" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="108830:108853" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="108914:108920" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="108920:108926" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="109147:109297" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="109168:109200" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="109358:109499" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="109379:109411" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="109784:109795" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="109826:109896" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="110747:111066" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="110761:110850" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="110854:111050" ph="..." />
+            <marker date="1489773352847" expanded="false" signature="111078:111084" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="111285:111999" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="111329:111564" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="111608:111951" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="112030:112046" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="112047:112171" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="113156:115448" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="113233:115380" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="113328:115371" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="113560:114883" ph="/*...*/" />
+            <marker date="1489773352847" expanded="true" signature="115010:115130" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="115134:115253" ph="{...}" />
+            <marker date="1489773352847" expanded="true" signature="116056:116062" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="117335:117349" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="117603:117616" ph="..." />
+            <marker date="1489773352847" expanded="true" signature="117877:117883" ph=" " />
+            <marker date="1489773352847" expanded="true" signature="119542:119676" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_callbacks" />
+            <marker date="1489773352847" expanded="true" signature="119762:119846" ph="SELECT * FRO... ${_DB_PREFIX_}hipay_callbacks" />
+            <marker date="1489773352847" expanded="true" signature="120197:120298" ph="SELECT `trea... ${_DB_PREFIX_}hipay_callbacks" />
+            <marker date="1489773352847" expanded="true" signature="121275:121353" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/config_fr.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hipay_tpp/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="30">
+            <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
