@@ -689,23 +689,22 @@ function captureOrder($callback_arr = null, $order = null) {
 		// Add the card name
 		$local_card_name = ' via ' . (string) ucwords($callback_arr['payment_product']);
 		// Retrieve xml list
-		if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
-			$local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
-			// If cards exists
-			if (isset($local_cards)) {
-				// If cards count > 0
-				if (count($local_cards)) {
-					// Go through each card
-					foreach ($local_cards as $value) {
-						// If card code value = payment_product value
-						if ((string) $value->code == trim($callback_arr['payment_product'])) {
-							// Add the card name
-							$local_card_name = ' via ' . (string) $value->name;
-						}
-					}
-				}
-			}
-		}
+        if (file_exists(_PS_THEME_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
+            $local_cards = simplexml_load_file(_PS_THEME_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
+        } else if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
+            $local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
+        }
+        // If cards exists
+        if (isset($local_cards) && count($local_cards)) {
+            // Go through each card
+            foreach ($local_cards as $value) {
+                // If card code value = payment_product value
+                if ((string) $value->code == trim($callback_arr['payment_product'])) {
+                    // Add the card name
+                    $local_card_name = ' via ' . (string) $value->name;
+                }
+            }
+        }
 	}
 
 	// On met à jour la ligne transaction / paiement de la commande

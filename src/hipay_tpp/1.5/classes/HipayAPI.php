@@ -308,21 +308,23 @@ class HipayApi extends ObjectModel {
 			$payment_product_list_upd = $local_card;
 			$operation = 'Sale'; // Default value
 			// Override operation - Force sale, not manual capture.
-			if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
-				$local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
+            if (file_exists(_PS_THEME_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
+                $local_cards = simplexml_load_file(_PS_THEME_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
+            } else if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml')) {
+                $local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $hipay->name . '/special_cards.xml');
+            }
 
-				if (count($local_cards)) {
-					foreach ($local_cards as $value) {
-						if ($local_card == (string) $value->code) {
-							if ((string) $value->manualcapture == '1') {
-								$operation = 'Authorization';
-							} else {
-								$operation = 'Sale';
-							}
-						}
-					}
-				}
-			}
+            if (!isset($local_cards) && count($local_cards)) {
+                foreach ($local_cards as $value) {
+                    if ($local_card == (string) $value->code) {
+                        if ((string) $value->manualcapture == '1') {
+                            $operation = 'Authorization';
+                        } else {
+                            $operation = 'Sale';
+                        }
+                    }
+                }
+            }
 		}
 
 		// On module administration we change the values of display selector to get always by default the selector showed

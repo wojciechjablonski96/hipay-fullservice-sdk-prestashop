@@ -1,4 +1,8 @@
-# Version 1.3.6
+# Version 1.3.8
+Fix refund and partially refund
+New workflow status outofstock paid and unpaid
+
+# Version 1.3.7
 Fix Create order in success page 
 
 # Version 1.3.6

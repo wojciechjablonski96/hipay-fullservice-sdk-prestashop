@@ -38,7 +38,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.3.7';
+		$this->version = '1.3.8';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
@@ -65,7 +65,7 @@ class HiPay_Tpp extends PaymentModule {
 	}
 
 	public function install() {
-		if (!parent::install() || !$this->registerHook('footer') || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !$this->registerHook('displayAdminOrder') || !$this->registerHook('header') || !$this->registerHook('displayBackOfficeHeader') || !HipayLogger::createTables() || !$this->_installOrderState()) {
+		if (!$this->addHooks() || !parent::install() || !$this->registerHook('footer') || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !$this->registerHook('displayAdminOrder') || !$this->registerHook('header') || !$this->registerHook('displayBackOfficeHeader') || !HipayLogger::createTables() || !$this->_installOrderState()) {
 			return false;
 		}
 
@@ -77,7 +77,7 @@ class HiPay_Tpp extends PaymentModule {
 	}
 
 	public function uninstall() {
-		if (!parent::uninstall() || !HipayLogger::DropTables() || !Configuration::deleteByName('HIPAY_API_USERNAME') || !Configuration::deleteByName('HIPAY_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_API_USERNAME') || !Configuration::deleteByName('HIPAY_TEST_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_MODE') || !Configuration::deleteByName('HIPAY_PAYMENT_MODE') || !Configuration::deleteByName('HIPAY_CHALLENGE_URL') || !Configuration::deleteByname('HIPAY_CSS_URL') || !Configuration::deleteByname('HIPAY_ALLOWED_CARDS') || !Configuration::deleteByname('HIPAY_TEMPLATE_MODE') || !Configuration::deleteByname('HIPAY_SELECTOR_MODE') || !Configuration::deleteByname('HIPAY_IFRAME_WIDTH') || !Configuration::deleteByname('HIPAY_IFRAME_HEIGHT') || !Configuration::deleteByname('HIPAY_ALLOWED_LOCAL_CARDS') || !Configuration::deleteByname('HIPAY_THREEDSECURE') || !Configuration::deleteByname('HIPAY_THREEDSECURE_AMOUNT') || !Configuration::deleteByname('HIPAY_MANUALCAPTURE') || !Configuration::deleteByname('HIPAY_MEMORIZE') || !parent::uninstall()){
+		if (!$this->removesHooks() || !parent::uninstall() || !HipayLogger::DropTables() || !Configuration::deleteByName('HIPAY_API_USERNAME') || !Configuration::deleteByName('HIPAY_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_API_USERNAME') || !Configuration::deleteByName('HIPAY_TEST_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_MODE') || !Configuration::deleteByName('HIPAY_PAYMENT_MODE') || !Configuration::deleteByName('HIPAY_CHALLENGE_URL') || !Configuration::deleteByname('HIPAY_CSS_URL') || !Configuration::deleteByname('HIPAY_ALLOWED_CARDS') || !Configuration::deleteByname('HIPAY_TEMPLATE_MODE') || !Configuration::deleteByname('HIPAY_SELECTOR_MODE') || !Configuration::deleteByname('HIPAY_IFRAME_WIDTH') || !Configuration::deleteByname('HIPAY_IFRAME_HEIGHT') || !Configuration::deleteByname('HIPAY_ALLOWED_LOCAL_CARDS') || !Configuration::deleteByname('HIPAY_THREEDSECURE') || !Configuration::deleteByname('HIPAY_THREEDSECURE_AMOUNT') || !Configuration::deleteByname('HIPAY_MANUALCAPTURE') || !Configuration::deleteByname('HIPAY_MEMORIZE') || !parent::uninstall()){
 			return false;
 		}
 		return true;
@@ -2015,9 +2015,11 @@ class HiPay_Tpp extends PaymentModule {
 	}
 
 	public function checkLocalCards() {
-		if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $this->name . '/special_cards.xml')) {
-			$local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $this->name . '/special_cards.xml');
-		} else {
+        if (file_exists(_PS_THEME_DIR_ . '/modules/' . $this->name . '/special_cards.xml')) {
+            $local_cards = simplexml_load_file(_PS_THEME_DIR_ . '/modules/' . $this->name . '/special_cards.xml');
+        } else if (file_exists(_PS_ROOT_DIR_ . '/modules/' . $this->name . '/special_cards.xml')) {
+            $local_cards = simplexml_load_file(_PS_ROOT_DIR_ . '/modules/' . $this->name . '/special_cards.xml');
+        } else {
 			$local_cards = '';
 		}
 
@@ -2064,6 +2066,21 @@ class HiPay_Tpp extends PaymentModule {
 				}
 			}
 	}
+
+    private function addHooks()
+    {
+        return Db::getInstance()->execute('INSERT IGNORE INTO `'._DB_PREFIX_.'hook` (`name`, `title`, `description`, `position`)'
+            .' VALUES (\'displayHiPayAccepted\', \'After HiPay accepted\', \'Called just before rendering accept page.\', 1)'
+            .', (\'displayHiPayCanceled\', \'After HiPay canceled\', \'Called just before rendering cancel page.\', 1)'
+            .', (\'displayHiPayDeclined\', \'After HiPay declined\', \'Called just before rendering decline page.\', 1)'
+            .', (\'displayHiPayException\', \'After HiPay payment exception\', \'Called just before rendering exception page.\', 1)'
+            .', (\'displayHiPayPending\', \'After HiPay pending\', \'Called just before rendering pending page.\', 1)');
+    }
+
+    private function removesHooks()
+    {
+        return Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'hook` WHERE `name` IN (\'displayHiPayAccepted\', \'displayHiPayCanceled\', \'displayHiPayDeclined\', \'displayHiPayException\', \'displayHiPayPending\')');
+    }
 
 }
 
