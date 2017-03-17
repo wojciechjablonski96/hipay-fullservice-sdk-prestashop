@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b1454978-3b4a-40cb-8774-94d9d852c079" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php" afterPath="$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php" />
-    </list>
+    <list default="true" id="b1454978-3b4a-40cb-8774-94d9d852c079" name="Default" comment="" />
     <ignored path="hipay_tpp.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -26,7 +24,7 @@
       <file leaf-file-name="validation.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
+            <state relative-caret-position="152">
               <caret line="615" column="109" selection-start-line="612" selection-start-column="8" selection-end-line="615" selection-end-column="109" />
               <folding>
                 <marker date="1489739812033" expanded="true" signature="3848:3934" ph="SELECT id_ca... ${_DB_PREFIX_}" />
@@ -196,12 +194,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1489739498212</updated>
-      <workItem from="1489739499445" duration="1127000" />
+      <workItem from="1489739499445" duration="1238000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1127000" />
+    <option name="totallyTimeSpent" value="1238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1600" height="873" extended-state="6" />
@@ -261,7 +259,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
+        <state relative-caret-position="152">
           <caret line="615" column="109" selection-start-line="612" selection-start-column="8" selection-end-line="615" selection-end-column="109" />
           <folding>
             <marker date="1489739812033" expanded="true" signature="3848:3934" ph="SELECT id_ca... ${_DB_PREFIX_}" />
