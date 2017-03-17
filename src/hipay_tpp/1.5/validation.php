@@ -610,7 +610,10 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 	if($order_exist && $id_order){
 		//LOG 
 		HipayLog('--------------- oderexist && id_order');
-		if ((int)$order->getCurrentState() != (int)$orderState && !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState)){
+		if ((int)$order->getCurrentState() != (int)$orderState 
+			&& !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState,true)
+				&& !controleIfStatushistoryExist($id_order, _PS_OS_OUTOFSTOCK_UNPAID_, $orderState,true)
+					&& !controleIfStatushistoryExist($id_order, _PS_OS_OUTOFSTOCK_PAID_, $orderState,true)) {
 			//LOG 
 			HipayLog('--------------- statut différent');
 			$order_history = new OrderHistory();
