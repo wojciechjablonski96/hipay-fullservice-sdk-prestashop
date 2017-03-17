@@ -2,7 +2,7 @@
 <module>
 	<name>hipay_tpp</name>
 	<displayName><![CDATA[HiPay Fullservice]]></displayName>
-	<version><![CDATA[1.3.7]]></version>
+	<version><![CDATA[1.3.8]]></version>
 	<description><![CDATA[Acceptez les paiements en ligne internationaux quelque soit le terminal (Visa, Mastercard , Amex, m&eacute;thodes de paiements locales). B&eacute;n&eacute;ficiez d&#039;une protection contre la fraude de derni&egrave;re g&eacute;n&eacute;ration.]]></description>
 	<author><![CDATA[HiPay]]></author>
 	<tab><![CDATA[payments_gateways]]></tab>
