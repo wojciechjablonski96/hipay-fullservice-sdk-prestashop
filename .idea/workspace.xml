@@ -21,7 +21,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="validation.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="validation.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/hipay_tpp/1.5/validation.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
@@ -37,6 +37,16 @@
                 <marker date="1489739812033" expanded="true" signature="33655:33795" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
                 <marker date="1489739812033" expanded="true" signature="39559:39702" ph="SELECT COUNT... " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -194,12 +204,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1489739498212</updated>
-      <workItem from="1489739499445" duration="1238000" />
+      <workItem from="1489739499445" duration="1726000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1238000" />
+    <option name="totallyTimeSpent" value="1726000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1600" height="873" extended-state="6" />
@@ -272,6 +282,14 @@
             <marker date="1489739812033" expanded="true" signature="33655:33795" ph="SELECT * FRO... ${_DB_PREFIX_}order_payment" />
             <marker date="1489739812033" expanded="true" signature="39559:39702" ph="SELECT COUNT... " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
