@@ -38,7 +38,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.3.8';
+		$this->version = '1.3.9';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
@@ -1726,41 +1726,41 @@ class HiPay_Tpp extends PaymentModule {
 				if ($totalEncaissement != 0 && $hide_refund == false) {
 					$form .= '
 					<script>
-	                                           $( document ).ready(function() {
-	                                                	$("#hipay_refund_form").submit( function(){
-	                                                		var type=$("[name=hipay_refund_type]:checked").val();
-	                                                		var proceed = "true";
-	                                                		/*if(type=="partial")
-	                                                		{
-	                                                			var amount=$("#hidden2").val();
-	                                                			if(amount == "" || !$.isNumeric(amount))
-	                                                			{
-	                                                				alert("' . $this->l('Please enter an amount') . '");
-	                                                				proceed = "false";
-	                                                			}
-	                                                			if(amount<=0)
-	                                                			{
-	                                                				alert("' . $this->l('Please enter an amount greater than zero') . '");
-	                                                				proceed = "false";
-	                                                			}
-	                                                			if(amount>' . $totalEncaissement . ')
-	                                                			{
-	                                                				alert("' . $this->l('Amount exceeding authorized amount') . '");
-	                                                				proceed = "false";
-	                                                			}
-	                                                		}*/
+                       $( document ).ready(function() {
+                            $("#hipay_refund_form").submit( function(){
+                                var type=$("[name=hipay_refund_type]:checked").val();
+                                var proceed = "true";
+                                /*if(type=="partial")
+                                {
+                                    var amount=$("#hidden2").val();
+                                    if(amount == "" || !$.isNumeric(amount))
+                                    {
+                                        alert("' . $this->l('Please enter an amount') . '");
+                                        proceed = "false";
+                                    }
+                                    if(amount<=0)
+                                    {
+                                        alert("' . $this->l('Please enter an amount greater than zero') . '");
+                                        proceed = "false";
+                                    }
+                                    if(amount>' . $totalEncaissement . ')
+                                    {
+                                        alert("' . $this->l('Amount exceeding authorized amount') . '");
+                                        proceed = "false";
+                                    }
+                                }*/
 
-	                                                		if(proceed == "false")
-	                                                		{
-	                                                			return false;
-	                                                		}else{
-	                                                			return true;
-	                                                		}
+                                if(proceed == "false")
+                                {
+                                    return false;
+                                }else{
+                                    return true;
+                                }
 
-	                                                		return false;
-	                                                	});
-					});
-                                                         </script>
+                                return false;
+                            });
+					    });
+                    </script>
 					<form action="' . $form_action . '" method="post" id="hipay_refund_form">';
 
 					$form .= '<input type="hidden" name="id_order" value="' . Tools::getValue('id_order') . '" />';
@@ -1920,41 +1920,41 @@ class HiPay_Tpp extends PaymentModule {
 					}
 					if (($stillToCapture) && $hide_capture == false) {
 						$form .= "<script>
-	                                           $( document ).ready(function() {
-	                                                	$('#hipay_capture_form').submit( function(){
-	                                                		var type=$('[name=hipay_capture_type]:checked').val();
-	                                                		var proceed = 'true';
-	                                                		/*if(type=='partial')
-	                                                		{
-	                                                			var amount=$('#hidden4').val();
-	                                                			if(amount == '')
-	                                                			{
-	                                                				alert('" . $this->l('Please enter an amount') . "');
-	                                                				proceed = 'false';
-	                                                			}
-	                                                			if(amount<=0)
-	                                                			{
-	                                                				alert('" . $this->l('Please enter an amount greater than zero') . "');
-	                                                				proceed = 'false';
-	                                                			}
-	                                                			if(amount>" . $stillToCapture . ")
-	                                                			{
-	                                                				alert('" . $this->l('Amount exceeding authorized amount') . "');
-	                                                				proceed = 'false';
-	                                                			}
-	                                                		}*/
-
-	                                                		if(proceed == 'false')
-	                                                		{
-	                                                			return false;
-	                                                		}else{
-	                                                			return true;
-	                                                		}
-
-	                                                		return false;
-	                                                	});
-					});
-                                                         </script>";
+                           $( document ).ready(function() {
+                            $('#hipay_capture_form').submit( function(){
+                                var type=$('[name=hipay_capture_type]:checked').val();
+                                var proceed = 'true';
+                                /*if(type=='partial')
+                                {
+                                    var amount=$('#hidden4').val();
+                                    if(amount == '')
+                                    {
+                                        alert('" . $this->l('Please enter an amount') . "');
+                                        proceed = 'false';
+                                    }
+                                    if(amount<=0)
+                                    {
+                                        alert('" . $this->l('Please enter an amount greater than zero') . "');
+                                        proceed = 'false';
+                                    }
+                                    if(amount>" . $stillToCapture . ")
+                                    {
+                                        alert('" . $this->l('Amount exceeding authorized amount') . "');
+                                        proceed = 'false';
+                                    }
+                                }*/
+    
+                                if(proceed == 'false')
+                                {
+                                    return false;
+                                }else{
+                                    return true;
+                                }
+    
+                                return false;
+                            });
+					    });
+                        </script>";
 						$form .= '<form action="' . $form_action . '" method="post" id="hipay_capture_form">';
 						$form .= '<input type="hidden" name="id_order" value="' . Tools::getValue('id_order') . '" />';
 						$form .= '<input type="hidden" name="id_emp" value="' . $context->employee->id . '" />';

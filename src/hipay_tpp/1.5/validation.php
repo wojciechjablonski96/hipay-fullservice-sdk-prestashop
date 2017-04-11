@@ -1,6 +1,6 @@
 <?php
 /**
-* Copyright © 2015 HIPAY
+* Copyright © 2017 HIPAY
 *
 * NOTICE OF LICENSE
 *
@@ -610,24 +610,38 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 	if($order_exist && $id_order){
 		//LOG 
 		HipayLog('--------------- oderexist && id_order');
-		if ((int)$order->getCurrentState() != (int)$orderState && !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState)){
-			//LOG 
-			HipayLog('--------------- statut différent');
-			$order_history = new OrderHistory();
-			//LOG 
-			HipayLog('--------------- order_history init');
-			$order_history->id_order = $id_order;
-			//LOG 
-			HipayLog('--------------- order_id init');
-			$order_history->changeIdOrderState($orderState, $id_order,true);
-			//LOG 
-			HipayLog('--------------- changeIdOrderState('.$orderState.','.$id_order.')');
-			$order_history->add();
+        $stt_authoriz = Configuration::get('HIPAY_AUTHORIZED',null,null,1);
+		if ((int)$order->getCurrentState() != (int)$orderState 
+			&& !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState)
+				&& !controleIfStatushistoryExist($id_order, _PS_OS_OUTOFSTOCK_UNPAID_, $orderState,true)) {
 
-			//LOG 
-			HipayLog('--------------- statut changé = '.$orderState);
-
-			$bool = true;
+            if( (int)$order->getCurrentState() == _PS_OS_OUTOFSTOCK_PAID_
+                && ((int)$orderState == $stt_authoriz
+                || (int)$orderState == _PS_OS_PAYMENT_)) {
+                HipayLog('--------------- status with outofstock paid');
+            } elseif ( (int)$order->getCurrentState() == _PS_OS_PAYMENT_
+                && (int)$orderState == $stt_authoriz) {
+                HipayLog('--------------- status is already captured not need authorization');
+            } elseif ((int)$orderState == $stt_authoriz
+                && controleIfStatushistoryExist($id_order, $stt_authoriz, $orderState,true)) {
+                HipayLog('--------------- status is already captured not need authorization');
+            } else {
+                //LOG
+                HipayLog('--------------- statut différent');
+                $order_history = new OrderHistory();
+                //LOG
+                HipayLog('--------------- order_history init');
+                $order_history->id_order = $id_order;
+                //LOG
+                HipayLog('--------------- order_id init');
+                $order_history->changeIdOrderState($orderState, $id_order,true);
+                //LOG
+                HipayLog('--------------- changeIdOrderState('.$orderState.','.$id_order.')');
+                $order_history->add();
+                //LOG
+                HipayLog('--------------- statut changé = '.$orderState);
+                $bool = true;
+            }
 		}
 		if(!empty($callback_arr) && isset($callback_arr['status']) && $callback_arr['status'] == HIPAY_STATUS_CAPTURED){
 			$hipay = new HiPay_Tpp();
