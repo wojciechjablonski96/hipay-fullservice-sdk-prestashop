@@ -5,5 +5,6 @@
 .project
 _$*
 *.lock
-.idea
+.idea/*
 .vscode
+web*
