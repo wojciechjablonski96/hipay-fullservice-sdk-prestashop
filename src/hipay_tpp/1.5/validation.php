@@ -1,6 +1,6 @@
 <?php
 /**
-* Copyright © 2015 HIPAY
+* Copyright © 2017 HIPAY
 *
 * NOTICE OF LICENSE
 *
