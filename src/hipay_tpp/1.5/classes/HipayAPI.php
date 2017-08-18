@@ -234,23 +234,25 @@ class HipayApi extends ObjectModel {
 		$cdata3 = 'My+data+3';
 		$cdata4 = 'My+data+4';
 
+		$token  = HipayClass::getHipayToken($orderid, 'accept.php');
+
 		// Set of return URLs
 		if ($data_type == 'iframe') {
-			$accept_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&return_status=accept&content_only=1');
-			$decline_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&return_status=decline&content_only=1');
-			$cancel_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&return_status=cancel&content_only=1');
-			$pending_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&return_status=pending&content_only=1');
-			$exception_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&return_status=exception&content_only=1');
+			$accept_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid).'&return_status=accept&content_only=1');
+			$decline_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid).'&return_status=decline&content_only=1');
+			$cancel_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid).'&return_status=cancel&content_only=1');
+			$pending_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid).'&return_status=pending&content_only=1');
+			$exception_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=iframe&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid).'&return_status=exception&content_only=1');
 			// Template = iframe
 			$template = 'iframe';
 			if (Configuration::get('HIPAY_TEMPLATE_MODE') == 'basic-js')
 				$template .= '-js';
 		} else {
-			$accept_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=accept');
-			$decline_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=decline');
-			$cancel_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=cancel');
-			$exception_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=exception');
-			$pending_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=pending');
+			$accept_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=accept&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid));
+			$decline_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=decline&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid));
+			$cancel_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=cancel&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid));
+			$exception_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=exception&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid));
+			$pending_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=pending&token='.$token.'&id_order='.(int) Order::getOrderByCartId($orderid));
 			// Template = basic
 			$template = Configuration::get('HIPAY_TEMPLATE_MODE');
 		}

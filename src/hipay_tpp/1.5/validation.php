@@ -63,6 +63,16 @@ if (!isset($callback_arr['state']) && !isset($callback_arr['status'])) {
 	HipayLogger::addLog($hipay->l('Bad Callback initiated', 'hipay'), HipayLogger::ERROR, 'Bad Callback initiated, but not processed further');
 	die();
 }
+
+// Check Notification signature
+$signature = (isset($_SERVER["HTTP_X_ALLOPASS_SIGNATURE"])) ? $_SERVER["HTTP_X_ALLOPASS_SIGNATURE"]	: "";
+$transactionReference = $arr["transaction_reference"];
+
+if (!HipayClass::checkSignature($signature, true)) {
+	HipayLogger::addLog("Notify : Signature is wrong for Transaction $transactionReference.");
+	die('Bad Callback initiated - signature');
+}
+
 //LOG 
 HipayLog('state exist');
 // set variables state and status, if value is empty => init error
