@@ -1,3 +1,7 @@
+# Version 1.3.11
+
+Fix add new ZIP package
+
 # Version 1.3.10
 
 Fix add more security to notification and redirect
