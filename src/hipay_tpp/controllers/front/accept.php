@@ -38,8 +38,9 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
     	// récupération des informations en GET ou POST venant de la page de paiement
     	$cart_id 		= Tools::getValue('orderId');
     	$transac 		= Tools::getValue('reference');
+		$token 			= Tools::getValue('token');
     	$context 		= Context::getContext();
-        $hipay = new HiPay_Tpp();
+        $hipay 			= new HiPay_Tpp();
     	// --------------------------------------------------------------------------
     	// vérification si les informations ne sont pas = à FALSE
     	if(!$cart_id){
@@ -57,6 +58,19 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
     		// load cart
     		$objCart = new Cart((int)$cart_id);
     	}
+
+		//check request integrity
+		if ($token != HipayClass::getHipayToken($objCart->id)) {
+			HipayLogger::addLog('# Wrong token on payment validation');
+			$redirectUrl = $context->link->getModuleLink(
+				$this->module->name,
+				'exception',
+				array('status_error' => 405),
+				true
+			);
+			Tools::redirect($redirectUrl);
+		}
+
 		// LOCK SQL
 		#################################################################
 		$sql = 'begin;';

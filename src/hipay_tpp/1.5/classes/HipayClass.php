@@ -216,7 +216,7 @@ class HipayClass extends ObjectModel {
 			$errors[] = $hipay->l('Some items are no longer available, and we are unable to renew your order.', 'hipay');
 		else
 		{
-			// FR. Le panier courant a déjà été utilisé sur la plateforme Hipay. Un nouveau panier viens d'être créé afin de procéder malgré tout au paiement. Attention, celui-ci va impliquer une nouvelle transaction sur la plateforme Hipay. 
+			// FR. Le panier courant a dï¿½jï¿½ ï¿½tï¿½ utilisï¿½ sur la plateforme Hipay. Un nouveau panier viens d'ï¿½tre crï¿½ï¿½ afin de procï¿½der malgrï¿½ tout au paiement. Attention, celui-ci va impliquer une nouvelle transaction sur la plateforme Hipay. 
 			// EN. The current cart has already been used on the Hipay platform. A new cart just been created to make the payment anyway. Warning, this will involve a new transaction on the Hipay platform.
 			$errors[] = $hipay->l('The current cart has already been used on the Hipay platform. A new cart just been created to make the payment anyway. Warning, this will involve a new transaction on the Hipay platform.', 'hipay');
 			$context->cookie->id_cart = $duplication['cart']->id;
@@ -283,6 +283,45 @@ class HipayClass extends ObjectModel {
 		}
 	}
 
+	/**
+	 * Generate unique token
+	 * @param type $cartId
+	 * @param type $page
+	 * @return type
+	 */
+	public static function getHipayToken($cartId, $page = 'accept.php')
+	{
+		return md5(Tools::getToken($page).$cartId);
+	}
+
+	/**
+	 * Check if hipay server signature match post data + passphrase
+	 * @param type $signature
+	 * @param type $config
+	 * @param type $fromNotification
+	 * @return boolean
+	 */
+	public static function checkSignature(
+		$signature, $fromNotification = false
+	)
+	{
+		$passphrase     = Configuration::get('HIPAY_TEST_MODE') ? Configuration::get('HIPAY_TEST_API_PASSPHRASE')
+			: Configuration::get('HIPAY_API_PASSPHRASE');
+
+		if (empty($passphrase) && empty($signature)) {
+			return true;
+		}
+
+		if ($fromNotification) {
+			$rawPostData = Tools::file_get_contents("php://input");
+			if ($signature == sha1($rawPostData.$passphrase)) {
+				return true;
+			}
+			return false;
+		}
+
+		return false;
+	}
 }
 
 // Include other Classes with default Hipay Class

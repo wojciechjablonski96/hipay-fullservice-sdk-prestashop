@@ -38,7 +38,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.3.9';
+		$this->version = '1.3.10';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
@@ -77,7 +77,7 @@ class HiPay_Tpp extends PaymentModule {
 	}
 
 	public function uninstall() {
-		if (!$this->removesHooks() || !parent::uninstall() || !HipayLogger::DropTables() || !Configuration::deleteByName('HIPAY_API_USERNAME') || !Configuration::deleteByName('HIPAY_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_API_USERNAME') || !Configuration::deleteByName('HIPAY_TEST_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_MODE') || !Configuration::deleteByName('HIPAY_PAYMENT_MODE') || !Configuration::deleteByName('HIPAY_CHALLENGE_URL') || !Configuration::deleteByname('HIPAY_CSS_URL') || !Configuration::deleteByname('HIPAY_ALLOWED_CARDS') || !Configuration::deleteByname('HIPAY_TEMPLATE_MODE') || !Configuration::deleteByname('HIPAY_SELECTOR_MODE') || !Configuration::deleteByname('HIPAY_IFRAME_WIDTH') || !Configuration::deleteByname('HIPAY_IFRAME_HEIGHT') || !Configuration::deleteByname('HIPAY_ALLOWED_LOCAL_CARDS') || !Configuration::deleteByname('HIPAY_THREEDSECURE') || !Configuration::deleteByname('HIPAY_THREEDSECURE_AMOUNT') || !Configuration::deleteByname('HIPAY_MANUALCAPTURE') || !Configuration::deleteByname('HIPAY_MEMORIZE') || !parent::uninstall()){
+		if (!$this->removesHooks() || !parent::uninstall() || !HipayLogger::DropTables() || !Configuration::deleteByName('HIPAY_API_USERNAME') || !Configuration::deleteByName('HIPAY_API_PASSWORD') || !Configuration::deleteByName('HIPAY_API_PASSPHRASE') || !Configuration::deleteByName('HIPAY_TEST_API_PASSPHRASE') || !Configuration::deleteByName('HIPAY_TEST_API_USERNAME') || !Configuration::deleteByName('HIPAY_TEST_API_PASSWORD') || !Configuration::deleteByName('HIPAY_TEST_MODE') || !Configuration::deleteByName('HIPAY_PAYMENT_MODE') || !Configuration::deleteByName('HIPAY_CHALLENGE_URL') || !Configuration::deleteByname('HIPAY_CSS_URL') || !Configuration::deleteByname('HIPAY_ALLOWED_CARDS') || !Configuration::deleteByname('HIPAY_TEMPLATE_MODE') || !Configuration::deleteByname('HIPAY_SELECTOR_MODE') || !Configuration::deleteByname('HIPAY_IFRAME_WIDTH') || !Configuration::deleteByname('HIPAY_IFRAME_HEIGHT') || !Configuration::deleteByname('HIPAY_ALLOWED_LOCAL_CARDS') || !Configuration::deleteByname('HIPAY_THREEDSECURE') || !Configuration::deleteByname('HIPAY_THREEDSECURE_AMOUNT') || !Configuration::deleteByname('HIPAY_MANUALCAPTURE') || !Configuration::deleteByname('HIPAY_MEMORIZE') || !parent::uninstall()){
 			return false;
 		}
 		return true;
@@ -695,6 +695,13 @@ class HiPay_Tpp extends PaymentModule {
 					),
 					array(
 						'type' => 'text',
+						'label' => $this->l('HiPay API Passphrase :'),
+						'name' => 'HIPAY_API_PASSPHRASE',
+						'desc' => $this->l('Your API Passphrase'),
+						'required' => false
+					),
+					array(
+						'type' => 'text',
 						'label' => $this->l('HiPay Test API Username :'),
 						'name' => 'HIPAY_TEST_API_USERNAME',
 						'desc' => $this->l('Your Test API Username'),
@@ -705,6 +712,13 @@ class HiPay_Tpp extends PaymentModule {
 						'label' => $this->l('HiPay Test API Password :'),
 						'name' => 'HIPAY_TEST_API_PASSWORD',
 						'desc' => $this->l('Your Test API Password'),
+						'required' => false
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('HiPay Test API Passphrase :'),
+						'name' => 'HIPAY_TEST_API_PASSPHRASE',
+						'desc' => $this->l('Your Test API Passphrase'),
 						'required' => false
 					),
 					array(
@@ -1163,8 +1177,10 @@ class HiPay_Tpp extends PaymentModule {
 		$set_config_fields_values = array(
 			'HIPAY_API_USERNAME' => Tools::getValue('HIPAY_API_USERNAME', Configuration::get('HIPAY_API_USERNAME')),
 			'HIPAY_API_PASSWORD' => Tools::getValue('HIPAY_API_PASSWORD', Configuration::get('HIPAY_API_PASSWORD')),
+			'HIPAY_API_PASSPHRASE' => Tools::getValue('HIPAY_API_PASSPHRASE', Configuration::get('HIPAY_API_PASSPHRASE')),
 			'HIPAY_TEST_API_USERNAME' => Tools::getValue('HIPAY_TEST_API_USERNAME', Configuration::get('HIPAY_TEST_API_USERNAME')),
 			'HIPAY_TEST_API_PASSWORD' => Tools::getValue('HIPAY_TEST_API_PASSWORD', Configuration::get('HIPAY_TEST_API_PASSWORD')),
+			'HIPAY_TEST_API_PASSPHRASE' => Tools::getValue('HIPAY_TEST_API_PASSPHRASE', Configuration::get('HIPAY_TEST_API_PASSPHRASE')),
 			'HIPAY_TEST_MODE' => Tools::getValue('HIPAY_TEST_MODE', Configuration::get('HIPAY_TEST_MODE')),
 			'HIPAY_THREEDSECURE' => Tools::getValue('HIPAY_THREEDSECURE', Configuration::get('HIPAY_THREEDSECURE')),
 			'HIPAY_THREEDSECURE_AMOUNT' => $str,
@@ -1313,8 +1329,10 @@ class HiPay_Tpp extends PaymentModule {
 		if (Tools::isSubmit('btnSubmit')) {
 			Configuration::updateValue('HIPAY_API_USERNAME', Tools::getValue('HIPAY_API_USERNAME'));
 			Configuration::updateValue('HIPAY_API_PASSWORD', Tools::getValue('HIPAY_API_PASSWORD'));
+			Configuration::updateValue('HIPAY_API_PASSPHRASE', Tools::getValue('HIPAY_API_PASSPHRASE'));
 			Configuration::updateValue('HIPAY_TEST_API_USERNAME', Tools::getValue('HIPAY_TEST_API_USERNAME'));
 			Configuration::updateValue('HIPAY_TEST_API_PASSWORD', Tools::getValue('HIPAY_TEST_API_PASSWORD'));
+			Configuration::updateValue('HIPAY_TEST_API_PASSPHRASE', Tools::getValue('HIPAY_TEST_API_PASSPHRASE'));
 			Configuration::updateValue('HIPAY_TEST_MODE', Tools::getValue('HIPAY_TEST_MODE'));
 			Configuration::updateValue('HIPAY_THREEDSECURE', Tools::getValue('HIPAY_THREEDSECURE'));
 			// Modification to save the amount of 3D Secure

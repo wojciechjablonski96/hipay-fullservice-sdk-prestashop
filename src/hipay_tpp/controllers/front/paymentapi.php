@@ -197,7 +197,7 @@ class HiPay_TppPaymentApiModuleFrontController extends ModuleFrontController {
 			));
 
 			$tokens = HipayToken::getTokens($cart->id_customer); //
-			if ($tokens ['0']) {
+			if ($tokens['0']) {
 				$token_display = 'true';
 			} else {
 				$token_display = 'false';
@@ -276,19 +276,21 @@ class HiPay_TppPaymentApiModuleFrontController extends ModuleFrontController {
 				);
 			}
 
+			$token  = HipayClass::getHipayToken($cart->id, 'accept.php');
+
 			switch ($response_state) {
 				case 'completed' :
-					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=accept');
+					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=accept&token='.$token);
 					break;
 				case 'declined' :
-					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=decline');
+					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=decline&token='.$token);
 					break;
 				case 'cancel' :
-					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=cancel');
+					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=cancel&token='.$token);
 					break;
 				case 'pending' :
 				case 'forwarding' :
-					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=pending');
+					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=pending&token='.$token);
 					// Implementing challenge url
 					// Redirecting to challenge url if url present
 					if (Configuration::get('HIPAY_CHALLENGE_URL')) {
@@ -297,7 +299,7 @@ class HiPay_TppPaymentApiModuleFrontController extends ModuleFrontController {
 					break;
 				case 'exception' :
 				default :
-					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=exception');
+					$redirect_url = HipayClass::getRedirectionUrl(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . 'index.php?fc=module&module=' . $hipay->name . '&controller=exception&token='.$token);
 					break;
 			}
 

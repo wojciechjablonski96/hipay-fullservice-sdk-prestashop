@@ -1,3 +1,7 @@
+# Version 1.3.10
+
+Fix add more security to notification and redirect
+
 # Version 1.3.9
 # Version 1.3.8
 Fix refund and partially refund
