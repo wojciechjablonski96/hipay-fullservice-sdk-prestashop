@@ -22,20 +22,20 @@ if [ "$1" = '' ] || [ "$1" = '--help' ];then
 fi
 
 if [ "$1" = 'init' ];then
-    docker-compose stop
-    docker-compose rm -fv
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml stop
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml rm -fv
     rm -Rf web/
-    docker-compose build --no-cache
-    docker-compose up -d
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml build --no-cache
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 fi
 
 if [ "$1" = 'restart' ];then
-    docker-compose stop
-    docker-compose up -d
+    docker-compose -f docker-compose.yml -f docker-compose.dev.ymlstop
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 fi
 
 if [ "$1" = 'up' ];then
-    docker-compose up -d
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 fi
 
 if [ "$1" = 'exec' ];then
