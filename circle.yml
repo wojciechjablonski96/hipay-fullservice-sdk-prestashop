@@ -6,7 +6,7 @@ test:
       - sudo apt-get install sshpass
       - ./prestashop.sh init
   override:
-    - sleep 100
+    - sleep 300
     - curl --retry 10 --retry-delay 20 -v http://localhost:8202
 deployment:
   prod:
