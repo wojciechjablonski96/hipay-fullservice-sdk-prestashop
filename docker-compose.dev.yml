@@ -1,0 +1,16 @@
+prestashop:
+  ports:
+    - "8202:80"
+  env_file:
+    - ./conf/env_file/development/env
+  volumes:
+    - ./web:/var/www/html
+    - ./src/hipay_tpp:/var/www/html/modules/hipay_tpp
+mysql:
+  env_file:
+    - ./conf/env_file/development/env
+  ports:
+    - "3308:3306"
+smtp:
+  ports:
+    - "1102:1080"
