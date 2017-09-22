@@ -21,4 +21,4 @@ mysql:
 smtp:
   container_name: {CONTAINER_NAME_SMTP}
   ports:
-    - "{PORT_SMTP}:1080"
+    - "{PORT_SMTP}:80"
