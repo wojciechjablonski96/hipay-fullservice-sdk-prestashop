@@ -2,10 +2,11 @@ port=$(wget --no-check-certificate --user=$DOCKER_MACHINE_LOGIN --password=$DOCK
 
 GITHUB_BRANCH=$CIRCLE_BRANCH
 if [ $CIRCLE_TAG != "" ];then
-    GIT_HUB_BRANCH=CIRCLE_TAG
+    GITHUB_BRANCH=$CIRCLE_TAG
 fi
 
-BRANCH=${CIRCLE_BRANCH////-}
+BRANCH=${GITHUB_BRANCH////-}
+
 
 echo "Create Artifact project for project $CIRCLE_PROJECT_REPONAME and branch $GITHUB_BRANCH to /deploy/project/artifactory/$CIRCLE_PROJECT_REPONAME/$BRANCH"
 sshpass -p $PASS_DEPLOY ssh root@docker-knock-auth.hipay.org -p $port mkdir /deploy/project/artifactory/$CIRCLE_PROJECT_REPONAME/$BRANCH
