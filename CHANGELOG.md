@@ -1,3 +1,7 @@
+# Version 1.3.12
+
+Fix generate token sent to HiPay PS 1.5
+
 # Version 1.3.11
 
 Fix add new ZIP package

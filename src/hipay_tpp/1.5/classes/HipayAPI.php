@@ -234,7 +234,7 @@ class HipayApi extends ObjectModel {
 		$cdata3 = 'My+data+3';
 		$cdata4 = 'My+data+4';
 
-		$token  = HipayClass::getHipayToken($orderid, 'accept.php');
+		$token  = HipayClass::getHipayToken($cart->id, 'accept.php');
 
 		// Set of return URLs
 		if ($data_type == 'iframe') {
