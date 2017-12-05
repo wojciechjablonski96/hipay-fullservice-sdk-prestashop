@@ -51,13 +51,9 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 					ORDER BY date_upd DESC';
 	        $result = Db::getInstance()->getRow($sql);
 	        $cart_id = isset($result['id_cart']) ? $result['id_cart'] : false;
-			if($cart_id){
-				$objCart = new Cart((int)$cart_id);
-			}
-    	}else{
     		// load cart
-    		$objCart = new Cart((int)$cart_id);
     	}
+        $objCart = new Cart((int)$cart_id);
 
 		//check request integrity
 		if ($token != HipayClass::getHipayToken($objCart->id)) {
@@ -80,8 +76,9 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 			die('Lock not initiated');
 		}
 
-    	// load order for id_order 
+    	// load order for id_order
     	$order_id = Order::getOrderByCartId($cart_id);
+			$customer = new Customer((int)$objCart->id_customer);
     	if($order_id && !empty($order_id) && $order_id > 0 ){
 	    	// load transaction by id_order
 	    	$sql = 'SELECT DISTINCT(op.transaction_id)
@@ -90,7 +87,6 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController {
 					WHERE o.id_order = '.$order_id;
 	        $result = Db::getInstance()->getRow($sql);
 	    } else {
-			$customer = new Customer((int)$objCart->id_customer);
 			$shop_id = $objCart->id_shop;
 			$shop = new Shop($shop_id);
 			// forced shop
