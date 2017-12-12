@@ -622,7 +622,7 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 		HipayLog('--------------- oderexist && id_order');
         $stt_authoriz = Configuration::get('HIPAY_AUTHORIZED',null,null,1);
 		
-		//OUTOFSTOCK exist
+        //OUTOFSTOCK exist
         if(_PS_VERSION_ < '1.6' && !_PS_OS_OUTOFSTOCK_UNPAID_ && !_PS_OS_OUTOFSTOCK_PAID_) {
         	$outofstock_paid = Configuration::get('PS_OS_OUTOFSTOCK');
         	$outofstock_unpaid = $outofstock_paid;
