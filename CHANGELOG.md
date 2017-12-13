@@ -1,3 +1,7 @@
+# Version 1.3.15
+
+Fix add control function defined the constant : OUTOFSTOCK_PAID/UNPAID
+
 # Version 1.3.14
 
 Fix add condition to init OUTOFSTOCK if PS1.5 and OUTOFSTOCK_PAID/UNPAID if PS 1.6 and more
