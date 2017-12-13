@@ -621,15 +621,19 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 		//LOG 
 		HipayLog('--------------- oderexist && id_order');
         $stt_authoriz = Configuration::get('HIPAY_AUTHORIZED',null,null,1);
-		
-        //OUTOFSTOCK exist
-        if(_PS_VERSION_ < '1.6' && !_PS_OS_OUTOFSTOCK_UNPAID_ && !_PS_OS_OUTOFSTOCK_PAID_) {
-        	$outofstock_paid = Configuration::get('PS_OS_OUTOFSTOCK');
-        	$outofstock_unpaid = $outofstock_paid;
-        } else {
-        	$outofstock_paid = _PS_OS_OUTOFSTOCK_PAID_;
-        	$outofstock_unpaid = _PS_OS_OUTOFSTOCK_UNPAID_;
-        }
+
+		//OUTOFSTOCK exist
+		if(_PS_VERSION_ < '1.6' && defined('_PS_OS_OUTOFSTOCK_UNPAID_') === FALSE && defined('_PS_OS_OUTOFSTOCK_PAID_') === FALSE) {
+			$outofstock_paid = (int)Configuration::get('PS_OS_OUTOFSTOCK');
+			$outofstock_unpaid = $outofstock_paid;
+			HipayLog('--------------- ID outofstock = ' . $outofstock_paid);
+		} else {
+			$outofstock_paid = _PS_OS_OUTOFSTOCK_PAID_;
+			$outofstock_unpaid = _PS_OS_OUTOFSTOCK_UNPAID_;
+			HipayLog('--------------- ID currentStatus     = ' .(int)$order->getCurrentState());
+			HipayLog('--------------- ID outofstock paid   = ' .$outofstock_paid);
+			HipayLog('--------------- ID outofstock unpaid = ' .$outofstock_unpaid);
+		}
 
 		if ((int)$order->getCurrentState() != (int)$orderState 
 			&& !controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState)
