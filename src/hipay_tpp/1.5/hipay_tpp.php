@@ -38,7 +38,7 @@ class HiPay_Tpp extends PaymentModule {
 	public function __construct() {
 		$this->name = 'hipay_tpp';
 		$this->tab = 'payments_gateways';
-		$this->version = '1.3.15';
+		$this->version = '1.3.16';
 		$this->module_key = 'e25bc8f4f9296ef084abf448bca4808a';
 		$this->author = 'HiPay';
 
