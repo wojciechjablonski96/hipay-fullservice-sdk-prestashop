@@ -44,6 +44,14 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
         $token = Tools::getValue('token');
         $context = Context::getContext();
         $hipay = new HiPay_Tpp();
+
+        $this->HipayLog('##############################');
+        $this->HipayLog('## ACCEPT.PHP - INFO getValue');
+        $this->HipayLog('## cart_id ' . $cart_id );
+        $this->HipayLog('## transaction ' . $transac );
+        $this->HipayLog('## token ' . $token );
+        $this->HipayLog('##############################');
+
         // --------------------------------------------------------------------------
         // vérification si les informations ne sont pas = à FALSE
         if (!$cart_id) {
@@ -54,8 +62,27 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
 					ORDER BY date_upd DESC';
             $result = Db::getInstance()->getRow($sql);
             $cart_id = isset($result['id_cart']) ? $result['id_cart'] : false;
+
+            $this->HipayLog('##############################');
+            $this->HipayLog('## // récupération du dernier panier via son compte client ' . $cart_id);
+            $this->HipayLog('##############################');
         }
-				// load cart
+
+        // LOCK SQL
+        #################################################################
+        $sql = 'begin;';
+        $sql .= 'SELECT id_cart FROM ' . _DB_PREFIX_ . 'cart WHERE id_cart = ' . (int)$cart_id . ' FOR UPDATE;';
+        if (!Db::getInstance()->execute($sql)) {
+            HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR,
+                'Bad LockSQL initiated, Lock could not be initiated for id_cart = ' . $cart_id);
+            die('Lock not initiated');
+        } else {
+            $this->HipayLog('##############################');
+            $this->HipayLog('## LOCK ON for the cart ' . $cart_id);
+            $this->HipayLog('##############################');
+        }
+
+        // load cart
         $objCart = new Cart((int)$cart_id);
 
         //check request integrity
@@ -70,18 +97,13 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
             Tools::redirect($redirectUrl);
         }
 
-        // LOCK SQL
-        #################################################################
-        $sql = 'begin;';
-        $sql .= 'SELECT id_cart FROM ' . _DB_PREFIX_ . 'cart WHERE id_cart = ' . (int)$cart_id . ' FOR UPDATE;';
-        if (!Db::getInstance()->execute($sql)) {
-            HipayLogger::addLog($hipay->l('Bad LockSQL initiated', 'hipay'), HipayLogger::ERROR,
-                'Bad LockSQL initiated, Lock could not be initiated for id_cart = ' . $cart_id);
-            die('Lock not initiated');
-        }
-
         // load order for id_order
         $order_id = Order::getOrderByCartId($cart_id);
+
+        $this->HipayLog('##############################');
+        $this->HipayLog('## Order ID ' . $order_id );
+        $this->HipayLog('##############################');
+
         $customer = new Customer((int)$objCart->id_customer);
         if ($order_id && !empty($order_id) && $order_id > 0) {
             // load transaction by id_order
@@ -90,11 +112,22 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
 					INNER JOIN `' . _DB_PREFIX_ . 'orders` o ON o.reference = op.order_reference
 					WHERE o.id_order = ' . $order_id;
             $result = Db::getInstance()->getRow($sql);
+
+            $this->HipayLog('##############################');
+            $this->HipayLog('## Order exist, sql execute =  ' . $sql );
+            $this->HipayLog('##############################');
         } else {
             $shop_id = $objCart->id_shop;
             $shop = new Shop($shop_id);
             // forced shop
             Shop::setContext(Shop::CONTEXT_SHOP, $objCart->id_shop);
+
+            $this->HipayLog('##############################');
+            $this->HipayLog('## Order not exist');
+            $this->HipayLog('## shop_id =  ' . $shop_id );
+            $this->HipayLog('##############################');
+            $this->HipayLog('##############################');
+            $this->HipayLog('## start validate order');
             $hipay->validateOrder(
                 (int)$cart_id,
                 Configuration::get('HIPAY_PENDING'),
@@ -107,9 +140,34 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
                 $customer->secure_key,
                 $shop
             );
+            $this->HipayLog('## End validate order');
+            $this->HipayLog('##############################');
             // get order id
             $order_id = $hipay->currentOrder;
+
+            $this->HipayLog('##############################');
+            $this->HipayLog('## Order ID after validate order =  ' . $order_id );
+            $this->HipayLog('##############################');
+
+            // transaction table Hipay
+            $sql = "
+            INSERT INTO `" . _DB_PREFIX_ . "hipay_transactions`
+            (`cart_id`,`order_id`,`customer_id`,`transaction_reference`, `device_id`, `ip_address`, `ip_country`, `token`) VALUES
+            ('" . (int)$cart_id . "',
+                '" . (int)$order_id . "',
+                '" . (int)$customer->id . "',
+                '" . pSQL($transac) . "',0,0,0,0);";
+            if (!Db::getInstance()->execute($sql)) {
+                //LOG
+                HipayLogger::addLog('Insert table HiPay transactions error');
+            } else {
+                $this->HipayLog('##############################');
+                $this->HipayLog('## SQL hipay transaction =  ' . $sql );
+                $this->HipayLog('##############################');
+            }
+
         }
+
         // commit lock SQL
         $sql = 'commit;';
         if (!Db::getInstance()->execute($sql)) {
@@ -117,18 +175,9 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
                 'Bad LockSQL end, Lock could not be end for id_cart = ' . $cart_id);
         }
 
-        // transaction table Hipay
-        $sql = "
-            INSERT INTO `" . _DB_PREFIX_ . "hipay_transactions`
-            (`cart_id`,`order_id`,`customer_id`,`transaction_reference`) VALUES
-            ('" . (int)$cart_id . "',
-                '" . (int)$order_id . "',
-                '" . (int)$customer->id . "',
-                '" . pSQL($transac) . "');";
-        if (!Db::getInstance()->execute($sql)) {
-            //LOG
-            HipayLogger::addLog('Insert table HiPay transactions error');
-        }
+        $this->HipayLog('##############################');
+        $this->HipayLog('## LOCK OFF for the cart ' . $cart_id);
+        $this->HipayLog('##############################');
 
         $transaction = isset($result['transaction_id']) ? $result['transaction_id'] : (int)$transac;
         $context->smarty->assign(array(
@@ -140,5 +189,15 @@ class HiPay_TppAcceptModuleFrontController extends ModuleFrontController
         ));
         Hook::exec('displayHiPayAccepted', array('cart' => $objCart, "order_id" => $order_id));
         $this->setTemplate('payment_accept.tpl');
+    }
+
+    #
+    # fonction qui log le script pour debug
+    #
+    private function HipayLog($msg){
+        $fp = fopen(_PS_ROOT_DIR_.'/modules/hipay_tpp/hipaylogs.txt','a+');
+        fseek($fp,SEEK_END);
+        fputs($fp,$msg."\r\n");
+        fclose($fp);
     }
 }

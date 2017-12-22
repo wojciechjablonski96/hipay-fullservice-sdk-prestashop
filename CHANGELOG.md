@@ -1,3 +1,7 @@
+# Version 1.3.16
+
+Fix sql request in accept.php in hipay_transaction
+
 # Version 1.3.15
 
 Fix add control function defined the constant : OUTOFSTOCK_PAID/UNPAID
