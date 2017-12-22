@@ -621,6 +621,7 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
 		//LOG 
 		HipayLog('--------------- oderexist && id_order');
         $stt_authoriz = Configuration::get('HIPAY_AUTHORIZED',null,null,1);
+		$stt_pending = Configuration::get('HIPAY_PENDING',null,null,1);
 
 		//OUTOFSTOCK exist
 		if(_PS_VERSION_ < '1.6' && defined('_PS_OS_OUTOFSTOCK_UNPAID_') === FALSE && defined('_PS_OS_OUTOFSTOCK_PAID_') === FALSE) {
@@ -644,12 +645,16 @@ function changeStatusOrder($order_exist, $id_order, $orderState, $order, $callba
                 || (int)$orderState == _PS_OS_PAYMENT_)) {
                 HipayLog('--------------- status with outofstock paid');
             } elseif ( (int)$order->getCurrentState() == _PS_OS_PAYMENT_
-                && (int)$orderState == $stt_authoriz) {
+                && ((int)$orderState == $stt_authoriz || (int)$orderState == $stt_pending))  {
                 HipayLog('--------------- status is already captured not need authorization');
             } elseif ((int)$orderState == $stt_authoriz
                 && controleIfStatushistoryExist($id_order, $stt_authoriz, $orderState,true)) {
                 HipayLog('--------------- status is already captured not need authorization');
-            } else {
+            } elseif ((int)$orderState == $stt_pending
+				&& (controleIfStatushistoryExist($id_order, $stt_authoriz, $orderState,true))
+					|| controleIfStatushistoryExist($id_order, _PS_OS_PAYMENT_, $orderState,true) ){
+				HipayLog('--------------- status is already captured not need pending');
+			} else {
                 //LOG
                 HipayLog('--------------- statut différent');
                 $order_history = new OrderHistory();
