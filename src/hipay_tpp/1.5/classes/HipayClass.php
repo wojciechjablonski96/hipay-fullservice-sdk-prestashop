@@ -37,7 +37,7 @@ class HipayClass extends ObjectModel {
 		// Warning : URL different from API Url
 		// Production = https://stage-secure-vault.hipay-tpp.com/rest/v1/token/
 		// Stage/testing = https://secure-vault.hipay-tpp.com/rest/v1/token/
-		return 'https://' . (Configuration::get('HIPAY_TEST_MODE') ? 'stage-' : '') . 'secure-vault.hipay-tpp.com/rest/v1/token/';
+		return 'https://' . (Configuration::get('HIPAY_TEST_MODE') ? 'stage-' : '') . 'secure2-vault.hipay-tpp.com/rest/v2/token/';
 	}
 
 	public static function getAPIUsername($shop_id=null) {
