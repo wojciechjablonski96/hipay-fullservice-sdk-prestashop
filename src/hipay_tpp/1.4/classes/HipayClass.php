@@ -36,7 +36,7 @@ class HipayClass extends ObjectModel {
 		// Warning : URL different from API Url
 		// Production = https://stage-secure-vault.hipay-tpp.com/rest/v1/token/
 		// Stage/testing = https://secure-vault.hipay-tpp.com/rest/v1/token/
-		return 'https://' . (Configuration::get('HIPAY_TEST_MODE') ? 'stage-' : '') . 'secure-vault.hipay-tpp.com/rest/v1/token/';
+		return 'https://' . (Configuration::get('HIPAY_TEST_MODE') ? 'stage-' : '') . 'secure2-vault.hipay-tpp.com/rest/v2/token/';
 	}
 
 	public static function getAPIUsername() {
@@ -183,7 +183,7 @@ class HipayClass extends ObjectModel {
 			$errors[] = $hipay->l('Some items are no longer available, and we are unable to renew your order.', 'hipay');
 		else
 		{
-			// FR. Le panier courant a déjà été utilisé sur la plateforme Hipay. Un nouveau panier viens d'être créé afin de procéder malgré tout au paiement. Attention, celui-ci va impliquer une nouvelle transaction sur la plateforme Hipay. 
+			// FR. Le panier courant a dï¿½jï¿½ ï¿½tï¿½ utilisï¿½ sur la plateforme Hipay. Un nouveau panier viens d'ï¿½tre crï¿½ï¿½ afin de procï¿½der malgrï¿½ tout au paiement. Attention, celui-ci va impliquer une nouvelle transaction sur la plateforme Hipay. 
 			// EN. The current cart has already been used on the Hipay platform. A new cart just been created to make the payment anyway. Warning, this will involve a new transaction on the Hipay platform.
 			$errors[] = $hipay->l('The current cart has already been used on the Hipay platform. A new cart just been created to make the payment anyway. Warning, this will involve a new transaction on the Hipay platform.', 'hipay');
 			$context->cookie->id_cart = $duplication['cart']->id;

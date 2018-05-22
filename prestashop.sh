@@ -30,7 +30,7 @@ if [ "$1" = 'init' ];then
 fi
 
 if [ "$1" = 'restart' ];then
-    docker-compose -f docker-compose.yml -f docker-compose.dev.ymlstop
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml stop
     docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 fi
 
