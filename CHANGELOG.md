@@ -1,5 +1,9 @@
 # Version 1.3.16
 
+Change deprecated url for card tokenization
+
+# Version 1.3.16
+
 Fix sql request in accept.php in hipay_transaction
 
 # Version 1.3.15
