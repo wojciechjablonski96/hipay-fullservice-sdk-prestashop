@@ -1,0 +1,86 @@
+image: hipay/gitlab-ci-base:jessie
+
+stages:
+ - build-test
+ - test
+ - clean-stack
+ - build
+ - deploy
+ - sync
+
+variables:
+  PROJECT_NAME_TEST: ${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}
+
+#########################
+####  JOBS          ####
+########################
+build-test:
+  stage: build-test
+  script:
+    - docker-compose -f docker-compose.test.yml build
+  tags:
+    - pi-commerce-no-overlay
+
+test:
+  stage: test
+  before_script:
+    - sed -i -e "s/{DB_HOST\}/${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}-${CI_JOB_ID}_database/" ./bin/docker/conf/test/env
+    - sed -i -e "s/{PS_DOMAIN\}/${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}-${CI_JOB_ID}_web/" ./bin/docker/conf/test/env
+  script:
+    - docker-compose -p $PROJECT_NAME_TEST -f docker-compose.test.yml stop
+    - docker-compose -p $PROJECT_NAME_TEST -f docker-compose.test.yml rm -fv
+    - docker-compose -p $PROJECT_NAME_TEST -f docker-compose.test.yml up -d
+    - sleep 250
+    - docker-compose -p $PROJECT_NAME_TEST -f docker-compose.test.yml logs
+    - curl --retry 10 --retry-delay 20 -v http:\/\/${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}-${CI_JOB_ID}_web/
+  after_script:
+    - /tools/clean-job.sh $PROJECT_NAME_TEST docker-compose.test.yml prestashop ${DOCKER_STACK}-${DOCKER_SERVICE}_web:${CI_COMMIT_REF_SLUG}
+  tags:
+    - pi-commerce-no-overlay
+
+clean-stack-test:
+  stage: clean-stack
+  script:
+    - echo "Clean remaining containers, network and images"
+  after_script:
+    - /tools/clean-job.sh $PROJECT_NAME_TEST docker-compose.test.yml prestashop ${DOCKER_STACK}-${DOCKER_SERVICE}_web:${CI_COMMIT_REF_SLUG}
+  tags:
+    - pi-commerce-no-overlay
+  when: always
+
+build:
+  stage: build
+  before_script:
+    - /tools/docker-rmi.sh ${REGISTRY_URL}/${DOCKER_STACK}-${DOCKER_SERVICE}_web:${CI_COMMIT_REF_SLUG}
+  script:
+    - docker-compose -f docker-compose.acceptance.yml build
+    - docker-compose -f docker-compose.acceptance.yml push
+  after_script:
+    - docker rmi ${REGISTRY_URL}/${DOCKER_STACK}-${DOCKER_SERVICE}_web:${CI_COMMIT_REF_SLUG}
+  tags:
+    - pi-commerce-no-overlay
+
+deploy2recette:
+  stage: deploy
+  before_script:
+     - sed -i -e "s/{DB_HOST\}/${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}-${CI_JOB_ID}_database/" ./bin/docker/conf/acceptance/env
+     - sed -i -e "s/{PS_DOMAIN\}/${DOCKER_STACK}-${DOCKER_SERVICE}-${CI_COMMIT_REF_SLUG}.hipay-pos-platform.com/" ./bin/docker/conf/acceptance/env
+      # Substitute env variables which doesn't exists on the distant machine
+     - /tools/substitute-env-var.sh docker-compose.acceptance.yml
+     # Change path for relative path to environment files
+     - sed -i -e "s|./bin/docker/conf/acceptance/env|env|g" docker-compose.acceptance.yml
+  script:
+    - bash /tools/deployToDockerMachine.sh -e ./bin/docker/conf/acceptance/env -s docker-compose.acceptance.yml -n $DOCKER_STACK-$DOCKER_SERVICE-$CI_COMMIT_REF_SLUG
+  allow_failure: true
+  tags:
+    - pi-commerce-no-overlay
+
+sync:
+  stage: sync
+  script:
+    - git clone --mirror https://$GITLAB_USER:$GITLAB_PASSWORD@gitlab.hipay.org/pi-ecommerce/hipay-fullservice-sdk-prestashop.git
+    - cd hipay-fullservice-sdk-prestashop.git
+    - git push --mirror https://$GITHUB_USER:$GITHUB_PASSWORD@github.com/hipay/hipay-fullservice-sdk-prestashop.git
+  allow_failure: true
+  tags:
+    - pi-commerce-no-overlay
