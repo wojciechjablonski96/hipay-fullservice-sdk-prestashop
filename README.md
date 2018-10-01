@@ -1,6 +1,6 @@
 # HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x
 
-[![Build Status](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master.svg?style=shield)](https://circleci.com/gh/hipay/hipay-fullservice-sdk-prestashop/tree/master) [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-fullservice-sdk-prestashop/master/LICENSE.md)
+[![Build Status](https://hook.hipay.org/badge-ci/build/pi-ecommerce/hipay-fullservice-sdk-prestashop/develop?service=github)](https://hook.hipay.org/badge-ci/build/pi-ecommerce/hipay-fullservice-sdk-prestashop/develop?service=github)
 
 The **HiPay Fullservice module for PrestaShop 1.4.x - 1.5.x - 1.6.x** is a PHP module which allows you to accept payments in your PrestaShop online store, offering innovative features to reduce shopping cart abandonment rates, optimize success rates and enhance the purchasing process on merchants’ sites to significantly increase business volumes without additional investments in the PrestaShop e-commerce CMS solution.
 
